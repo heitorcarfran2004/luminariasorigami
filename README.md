@@ -10,11 +10,39 @@ laranja: acentos em `#E86A22` e seções escuras em rust (`#6B2D0E`) no lugar do
 node dev/server.cjs   # http://localhost:3200  e  http://localhost:3200/promo
 ```
 
+## Performance
+
+O que está ligado, e por quê:
+
+| Medida | Onde | Efeito |
+|---|---|---|
+| Minificação de CSS/JS/HTML | `build.cjs`, no build da Vercel | −12,7% de HTML antes da compressão |
+| Cache dos assets | `vercel.json` → 30 dias + `stale-while-revalidate` | era `max-age=0, must-revalidate`: toda revisita rebaixava tudo |
+| Recompressão das imagens | `effort 6` no webp, trellis no jpeg | −41% no peso dos assets, dimensões idênticas |
+| `hero.png` paletizado | fallback de navegador sem webp | 2122 KB → 428 KB |
+| Fonte sem bloquear render | `media="print"` + `onload` no `<head>` | já existia |
+| `preload` + `fetchpriority` no hero | `<head>` | já existia — o hero é o elemento de LCP |
+| `loading="lazy"` nas imagens abaixo da dobra | carrossel, depoimentos, bônus | já existia |
+
+**`build.cjs` roda in place e só na Vercel** (guard em `process.env.VERCEL`). O que está no
+git continua legível; só o que vai pro CDN sai minificado. Ele é deliberadamente
+conservador: não remove ponto-e-vírgula, não junta linhas de JS e não toca em nenhum
+script externo além da indentação — o bloco da Utmify sai byte a byte idêntico.
+
+Os arquivos de imagem **não têm hash no nome**. Por isso o cache é de 30 dias e não de
+1 ano com `immutable`: se você trocar uma imagem mantendo o mesmo nome, quem já visitou
+continuaria vendo a antiga. Se precisar trocar antes disso, renomeie o arquivo.
+
+Recompressão usada: as imagens foram regeradas a partir dos originais em Downloads, não
+recomprimidas em cima do webp que já existia — recomprimir lossy sobre lossy acumularia
+perda de geração. Mesmas dimensões, mesma qualidade, só mais esforço de encoder.
+
 ## Estrutura
 
 ```
 index.html          página de vendas (HTML + CSS + JS inline)
 promo.html          página de back-redirect, servida em /promo
+build.cjs           minificação executada pela Vercel a cada deploy
 assets/
   hero.webp/.png    arte do kit, com o fundo branco recortado
   pecas-web/        21 luminárias do carrossel (webp + jpg, 800x800)
