@@ -31,20 +31,29 @@ vercel.json         força deploy estático, sem build, com cleanUrls
 | Básico | R$ 10,00 | `VCCL1O8SD7R8` | recusa do popup |
 | Completo | R$ 25,90 | `VCCL1O8SD7U6` | seção de planos e CTA final |
 | Completo (popup) | R$ 17,90 | `VCCL1O8SD7U5` | popup ao clicar no básico |
-| Completo (back-redirect) | R$ 17,90 | `VCCL1O8SD7U5` | página `/promo` |
+| Completo (back-redirect) | R$ 8,90 | **falta cadastrar** | página `/promo` |
 
-Todos em `checkout.safepaymnt.shop`.
+Os cadastrados estão em `checkout.safepaymnt.shop`.
 
 O botão do plano Básico não vai direto para o checkout: ele abre o popup de downsell,
 e o link de R$ 10,00 fica na recusa (`Continuar só com o Básico`). É de propósito —
 é o que empurra para o de R$ 17,90.
 
-A `/promo` reaproveita o link de R$ 17,90 porque só existem três produtos cadastrados.
-Se quiser um back-redirect mais agressivo (tipo R$ 12,90), precisa cadastrar um quarto
-produto na SafePaymnt e trocar os dois links de `promo.html`.
+### ⚠️ A `/promo` está com o botão morto
+
+Os dois CTAs de `promo.html` apontam para `COLE_AQUI_CHECKOUT_PROMO_890`, porque o
+produto de R$ 8,90 ainda não existe na SafePaymnt. O back-redirect da index **já está
+ligado** e mandando para essa página, então quem tentar sair cai num botão que não
+leva a lugar nenhum. Não subir tráfego antes de cadastrar o produto e trocar os dois
+links — ou, se for demorar, esvaziar o `const link` da index para desligar o
+back-redirect no meio-tempo.
+
+Não dá para reaproveitar o link de R$ 17,90 aqui: a página inteira promete R$ 8,90,
+e o checkout cobraria outro valor.
 
 ## Pendências antes de subir tráfego
 
+- [ ] **Cadastrar o produto de R$ 8,90 e trocar os 2 `COLE_AQUI_CHECKOUT_PROMO_890` do `promo.html`**
 - [ ] Colar o Meta Pixel no lugar do comentário `<!-- META PIXEL: cole seu pixel aqui -->`
       (está em `index.html` **e** em `promo.html`)
 - [ ] Trocar `[seu e-mail de suporte]` no rodapé do `index.html`
@@ -52,8 +61,10 @@ produto na SafePaymnt e trocar os dois links de `promo.html`.
       (hoje o total anunciado é R$ 81)
 
 O script da Utmify veio da página de cerâmica e já está ativo — é o mesmo ID de conta.
-O back-redirect do `index.html` aponta para `/promo` por caminho relativo, então
-funciona igual no preview local e no domínio final.
+O back-redirect do `index.html` aponta para `https://luminariasorigami.vercel.app/promo`
+(URL absoluta, igual à da página de cerâmica). Isso significa que **no preview local o
+back-redirect pula para o site publicado**, não para o `localhost:3200/promo` — para
+testar a promo local, abrir a URL direto.
 
 ## Conteúdo
 
