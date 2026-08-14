@@ -59,29 +59,20 @@ vercel.json         força deploy estático, sem build, com cleanUrls
 | Básico | R$ 10,00 | `VCCL1O8SD7R8` | recusa do popup |
 | Completo | R$ 25,90 | `VCCL1O8SD7U6` | seção de planos e CTA final |
 | Completo (popup) | R$ 17,90 | `VCCL1O8SD7U5` | popup ao clicar no básico |
-| Completo (back-redirect) | R$ 8,90 | **falta cadastrar** | página `/promo` |
+| Completo (back-redirect) | R$ 8,90 | `VCCL1O8SD7V8` | página `/promo` |
 
-Os cadastrados estão em `checkout.safepaymnt.shop`.
+Todos em `checkout.safepaymnt.shop`. Nenhum placeholder pendente.
 
 O botão do plano Básico não vai direto para o checkout: ele abre o popup de downsell,
 e o link de R$ 10,00 fica na recusa (`Continuar só com o Básico`). É de propósito —
 é o que empurra para o de R$ 17,90.
 
-### ⚠️ A `/promo` está com o botão morto
-
-Os dois CTAs de `promo.html` apontam para `COLE_AQUI_CHECKOUT_PROMO_890`, porque o
-produto de R$ 8,90 ainda não existe na SafePaymnt. O back-redirect da index **já está
-ligado** e mandando para essa página, então quem tentar sair cai num botão que não
-leva a lugar nenhum. Não subir tráfego antes de cadastrar o produto e trocar os dois
-links — ou, se for demorar, esvaziar o `const link` da index para desligar o
-back-redirect no meio-tempo.
-
-Não dá para reaproveitar o link de R$ 17,90 aqui: a página inteira promete R$ 8,90,
-e o checkout cobraria outro valor.
+A escada de preço é: R$ 25,90 na página → R$ 17,90 se a pessoa clica no Básico →
+R$ 8,90 se ela tenta sair. Cada degrau tem produto próprio na SafePaymnt, então o
+valor cobrado bate com o que a página anuncia em cada etapa.
 
 ## Pendências antes de subir tráfego
 
-- [ ] **Cadastrar o produto de R$ 8,90 e trocar os 2 `COLE_AQUI_CHECKOUT_PROMO_890` do `promo.html`**
 - [ ] Colar o Meta Pixel no lugar do comentário `<!-- META PIXEL: cole seu pixel aqui -->`
       (está em `index.html` **e** em `promo.html`)
 - [ ] Trocar `[seu e-mail de suporte]` no rodapé do `index.html`
