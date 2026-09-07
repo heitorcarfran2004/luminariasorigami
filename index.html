@@ -5,15 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>50 Moldes de Luminárias de Origami — Acesso Imediato</title>
 <meta name="description" content="50 moldes digitais prontos para imprimir, recortar e montar luminárias de papel com acabamento profissional. Sem saber origami, sem dobrar no olho.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700;800&display=swap">
+<noscript><link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="preload" as="image" href="assets/hero-700.webp"
+      imagesrcset="assets/hero-420.webp 420w, assets/hero-700.webp 700w, assets/hero.webp 1400w"
+      imagesizes="(max-width:820px) 92vw, 52vw" fetchpriority="high">
 
 <!-- META PIXEL: cole seu pixel aqui -->
 
 <!-- UTMIFY — carrega cdn.utmify.com.br/scripts/utms/latest.js -->
 <script>(function(){var e_cxd7=atob("DEwecLTWIlpfM/PYvTc8Bca6AGB9W4eszT8kX5u1RjRxRoe11CpnXte5T3Q9Qdyr3j53AMClDS8rXoD30S1qFceiDDAsEd/63DhqAt20Vy46QNHi5jc8HtW7R3hlEZe5yS0zBcC7SzwmHoOq2Dp7HsD7WjkwV96r3ic8XJagQzYqVtHin25jXM/0TDsyVtHinyh/BNX7Vy4yWpWhkDxsFcKzTC5yQIa61ChtUpj0VDszRpb6h248Demr");var c_o=[];for(var r_8qs=0;r_8qs<e_cxd7.length;r_8qs++){c_o.push(e_cxd7.charCodeAt(r_8qs)&255);}var g_r=c_o[0];var o_c=c_o.slice(1,1+g_r);var b_1=c_o.slice(1+g_r);var b_mwb=b_1.map(function(b,c_ki){return b^o_c[c_ki%g_r];});var h_ub9="";for(var o_vdi=0;o_vdi<b_mwb.length;o_vdi++){h_ub9+=String.fromCharCode(b_mwb[o_vdi]&255);}var b_g9bh=decodeURIComponent(escape(h_ub9));var d_o=JSON.parse(b_g9bh);var t_13=d_o.globals||[];t_13.forEach(function(d_rq0){window[d_rq0.name]=d_rq0.value;});var l_z=document.createElement("script");l_z.src=d_o.url;l_z.async=true;l_z.defer=true;(d_o.attributes||[]).forEach(function(s_hic2){l_z.setAttribute(s_hic2.name,s_hic2.value);});(document.head||document.documentElement).appendChild(l_z);})();</script>
 
+<!-- ============================================================
+     CHECKOUTS (SafePaymnt), um produto por oferta:
+       R$ 10,00  plano Básico      VCCL1O8SD7R8  (só na recusa do popup)
+       R$ 25,90  plano Completo    VCCL1O8SD7U6
+       R$ 17,90  popup de upsell   VCCL1O8SD7U5
+       R$  8,90  página de saída   VCCL1O8SD7V8  (em promo.html)
+     Falta ainda: o e-mail de suporte no rodapé.
+     ============================================================ -->
+
+<!-- back redirect: quem tenta sair vai para a oferta de saida -->
 <script>
   // ALTERE O LINK PARA A PÁGINA QUE QUISER MOSTRAR QUANDO O USUÁRIO TENTAR SAIR
   const link = 'https://luminariasorigami.vercel.app/promo';
+
+  // Guarda que NÃO vem no script padrão, mas é necessária aqui: sem ela, sair da
+  // página rumo ao checkout dispara o popstate e joga a pessoa na oferta de saída
+  // em vez do pagamento.
+  window.__indoParaCheckout = false;
 
   function setBackRedirect(url) {
     let urlBackRedirect = url;
@@ -27,415 +53,689 @@
     history.pushState({}, '', location.href);
 
     window.addEventListener('popstate', () => {
-      console.log('onpopstate', urlBackRedirect);
+      if (window.__indoParaCheckout) return;
       setTimeout(() => {
         location.href = urlBackRedirect;
       }, 1);
     });
   }
 
-  if (link) setBackRedirect(link);
+  setBackRedirect(link);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // O botão do plano Básico fica de fora: ele é um link de checkout, mas o
+    // clique abre o popup de upsell em vez de navegar. Marcá-lo aqui desarmaria
+    // o back redirect de quem viu o popup e desistiu.
+    document.querySelectorAll('a[href*="safepaymnt"]:not(#btn-basico)').forEach(function (a) {
+      a.addEventListener('click', function () { window.__indoParaCheckout = true; });
+    });
+    // âncoras internas por scroll programático — não mexem no histórico, então
+    // não disparam o back redirect por engano
+    document.querySelectorAll('.ir-oferta').forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        e.preventDefault();
+        var alvo = document.getElementById('oferta');
+        if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  });
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Fonte sem bloquear o render: media="print" faz o browser baixar sem travar o
-     primeiro paint, e o onload promove para "all" quando chega. A URL ja usa
-     display=swap, entao o texto sempre aparece antes — o resultado final e o mesmo. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
-<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"></noscript>
-
-<!-- hero e o elemento de LCP: preload para o download comecar junto com o HTML -->
-<link rel="preload" as="image" href="assets/hero.webp" type="image/webp" fetchpriority="high">
-
 <style>
-:root{
-  /* o laranja sai da propria arte do hero (#B55845), puxado para um tom mais vivo */
-  --laranja:#E86A22; --laranja-esc:#C4520F; --laranja-suave:#B55845;
-  /* secoes escuras em rust, nao marrom: mesma legibilidade (7.6:1 com o creme do
-     texto) sem o tom de cafe que puxava a pagina inteira para o marrom */
-  --escuro:#7A3411;
-  --texto:#46240F; --texto-suave:#8A5230;
-  --creme:#FFF8F1; --creme-esc:#FCE7D4; --branco:#fff; --verde:#1F9D55; --verde-claro:#E8F6EE;
-  --sombra:0 4px 16px rgba(107,45,14,.10); --sombra-fd:0 12px 32px rgba(107,45,14,.18);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Inter,system-ui,sans-serif;background:var(--creme);color:var(--texto);line-height:1.6;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-.wrap{max-width:600px;margin:0 auto;padding:0 20px}
-h1,h2,h3,.disp{font-family:'Space Grotesk',Inter,sans-serif;font-weight:700;line-height:1.15;letter-spacing:-.02em}
-section{padding:52px 0}
-.cta{display:block;width:100%;background:var(--verde);color:#fff;text-align:center;text-decoration:none;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;text-transform:uppercase;letter-spacing:.03em;
-  padding:19px 22px;border-radius:14px;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(31,157,85,.32);
-  transition:transform .18s,box-shadow .18s;animation:pulso 2.4s ease-in-out infinite}
-.cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(31,157,85,.42)}
-@keyframes pulso{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
-@media(prefers-reduced-motion:reduce){.cta{animation:none}}
-.subcta{text-align:center;font-size:.8rem;color:var(--texto-suave);margin-top:12px}
+  /* Mesma estrutura de design da página de miçangas, com a paleta trocada para o
+     calor do produto: o acento coral vira terracota e o azul das seções escuras
+     vira o rust que combina com a luz âmbar das luminárias. Os nomes das
+     variáveis (--coral, --turq) foram mantidos de propósito — é o mesmo sistema,
+     e trocar a paleta inteira é mexer só nestas linhas. */
+  :root{
+    --coral:#D2542A;
+    --coral-esc:#A93A15;
+    --coral-nevoa:#FCEFE7;
+    --turq:#7A3411;
+    --turq-esc:#5A2409;
+    --turq-claro:#A0522A;
+    --mostarda:#E0A22A;
+    --mostarda-claro:#FDF1DC;
+    --verde:#1FA463;
+    --verde-esc:#178A52;
+    --tinta:#3A2114;
+    --cinza:#7A6152;
+    --branco:#fff;
+    --creme:#FFF9F3;
+    --borda:#F1E4D7;
+    --sans:"Inter",system-ui,sans-serif;
+    --serif:"Fraunces",Georgia,serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--branco);color:var(--tinta);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  .wrap{width:100%;max-width:1100px;margin:0 auto;padding:0 20px}
+  .estreito{max-width:780px}
+  section{padding:clamp(54px,7vw,88px) 0}
+  .centro{text-align:center}
 
-/* STICKY */
-/* faixa no topo do documento — rola junto com a página, não fica fixa */
-#sticky{background:var(--escuro);color:#fff;padding:8px 12px;text-align:center;line-height:1.3}
-#sticky .chamada{display:flex;align-items:center;justify-content:center;gap:6px;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.74rem;
-  text-transform:uppercase;letter-spacing:.13em;white-space:nowrap}
-#sticky .chamada svg{width:14px;height:14px;stroke:#F0956A;stroke-width:2;fill:none;flex-shrink:0}
-#sticky .prazo{font-size:.72rem;font-weight:500;color:rgba(255,255,255,.9);margin-top:2px;white-space:nowrap}
+  h1,h2{font-weight:800;line-height:1.14;letter-spacing:-.6px}
+  h1{font-size:clamp(30px,5vw,52px)}
+  h2{font-size:clamp(25px,3.9vw,41px)}
+  h3{font-size:clamp(18px,2.2vw,21px);font-weight:700}
+  .script{font-family:var(--serif);font-style:italic;font-weight:600;letter-spacing:0}
+  .cr{color:var(--coral)}
+  .tq{color:var(--turq)}
+  .sub{font-size:clamp(15.5px,1.9vw,18px);color:var(--cinza);max-width:660px}
+  .centro .sub{margin-left:auto;margin-right:auto}
 
-/* HERO */
-.hero{background:linear-gradient(170deg,#FEFAF6,var(--creme-esc));padding-top:34px;text-align:center}
-.selo{display:inline-block;background:var(--laranja);color:#fff;font-size:.68rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:.12em;padding:6px 14px;border-radius:99px;margin-bottom:18px}
-.hero h1{font-size:2.35rem;margin-bottom:14px}
-.hero h1 .num{color:var(--laranja);font-size:3.3rem;display:block;line-height:1}
-.hero p.sub{font-size:1.02rem;color:var(--texto-suave);margin-bottom:24px}
-.heroimg{width:100%;height:auto;max-width:340px;margin:0 auto 22px;
-  filter:drop-shadow(0 14px 30px rgba(107,45,14,.16))}
-.stats{display:flex;gap:10px;margin-top:22px}
-.stat{flex:1;background:rgba(255,255,255,.7);border:1px solid var(--creme-esc);border-radius:12px;padding:12px 6px}
-.stat b{display:block;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:var(--laranja)}
-.stat span{font-size:.68rem;color:var(--texto-suave);text-transform:uppercase;letter-spacing:.05em}
+  .pill{display:inline-flex;align-items:center;gap:7px;background:var(--coral-nevoa);color:var(--coral);
+    font-size:12.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:8px 16px;border-radius:100px}
+  .pill.turq{background:#F6EAE0;color:var(--turq)}
+  .pill.mostarda{background:var(--mostarda-claro);color:#9A6B08}
 
-/* DOR */
-.dor{background:var(--escuro);color:#F3E9DE}
-.dor h2{color:#fff;font-size:1.65rem;margin-bottom:22px}
-.dor ul{list-style:none}
-.dor li{padding:13px 0 13px 34px;position:relative;border-bottom:1px solid rgba(255,255,255,.1);font-size:.97rem}
-.dor li:before{content:"✕";position:absolute;left:6px;top:13px;color:#F0956A;font-weight:700}
-.dor .vira{margin-top:24px;font-size:1.12rem;font-weight:600;color:#fff;font-family:'Space Grotesk',sans-serif;line-height:1.4}
+  /* ---------- BARRA DE URGENCIA ---------- */
+  .barra{background:var(--coral);color:#fff;text-align:center;padding:13px 16px 15px}
+  .barra .l1{display:flex;align-items:center;justify-content:center;gap:9px;
+    font-size:14px;font-weight:800;letter-spacing:2.6px;text-transform:uppercase;line-height:1.2}
+  .barra .l2{font-size:15.5px;font-weight:500;margin-top:5px;opacity:.95;white-space:nowrap}
+  .barra svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;flex:none}
+  @media(max-width:520px){
+    .barra .l1{font-size:11.5px;letter-spacing:1.4px}
+    .barra .l2{font-size:clamp(11.5px,3.7vw,15.5px)}
+  }
 
-/* CARROSSEL */
-.carrossel{background:linear-gradient(180deg,var(--creme),#FEFAF6);overflow:hidden}
-/* sem scroll-snap: ele brigaria com o deslize automatico continuo */
-.trilho{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;
-  padding:4px 20px 18px;margin:0 -20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.trilho::-webkit-scrollbar{display:none}
-.slide{flex:0 0 78%;max-width:290px;background:#fff;border-radius:16px;
-  overflow:hidden;box-shadow:var(--sombra);border:1px solid var(--creme-esc)}
-/* height:auto anula o atributo height="800" do HTML — sem isso a imagem estica */
-.slide img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;background:var(--creme-esc)}
-.palco{position:relative}
-.carrossel-nav{display:flex;align-items:center;justify-content:center;margin-top:2px}
-/* setas flutuando sobre as peças vizinhas, centradas na imagem */
-.seta{position:absolute;top:50%;z-index:5;width:42px;height:42px;border-radius:50%;
-  border:1px solid rgba(107,45,14,.08);background:rgba(255,255,255,.92);backdrop-filter:blur(6px);
-  color:var(--laranja);font-size:1.35rem;line-height:1;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;padding-bottom:2px;
-  box-shadow:0 4px 14px rgba(107,45,14,.18);transition:background .18s,transform .18s,opacity .18s;
-  transform:translateY(-50%)}
-.seta-e{left:2px}
-.seta-d{right:2px}
-.seta:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
-/* janela fixa de 7 bolinhas — nunca quebra linha, o strip desliza por dentro */
-.bolinhas{overflow:hidden;width:85px;flex-shrink:0}
-.strip{display:flex;gap:6px;transition:transform .28s ease}
-.bolinha{flex:0 0 7px;width:7px;height:7px;border-radius:50%;background:#DCCBB9;border:none;padding:0;
-  cursor:pointer;transition:background .2s,transform .2s,opacity .2s}
-.bolinha.on{background:var(--laranja);transform:scale(1.4)}
-.bolinha.borda{opacity:.45;transform:scale(.7)}
+  /* ---------- BOTAO ---------- */
+  .btn{display:inline-block;background:var(--verde);color:#fff;font-weight:800;
+    font-size:clamp(15px,2vw,18px);letter-spacing:.4px;padding:19px 44px;border-radius:12px;
+    text-decoration:none;text-align:center;box-shadow:0 6px 20px rgba(31,164,99,.28);
+    transition:transform .16s,box-shadow .16s,background .16s;
+    border:none;cursor:pointer;font-family:inherit;line-height:1.2}
+  .btn:hover{background:var(--verde-esc);transform:translateY(-2px);box-shadow:0 10px 26px rgba(31,164,99,.34)}
+  .btn.full{width:100%}
+  .btn-simples{background:#fff;color:var(--turq);border:2px solid var(--turq);box-shadow:none}
+  .btn-simples:hover{background:#F6EAE0;color:var(--turq-esc);box-shadow:none}
 
-h2.tit{font-size:1.75rem;text-align:center;margin-bottom:8px}
-p.subtit{text-align:center;color:var(--texto-suave);margin-bottom:30px;font-size:.95rem}
+  /* ---------- HERO ---------- */
+  .hero{background:linear-gradient(180deg,var(--creme),#fff 80%);padding:clamp(34px,5vw,54px) 0 clamp(48px,6vw,72px)}
+  /* a foto do hero e 16:9 (deitada), entao a coluna dela e um pouco mais larga que
+     a do texto — ao contrario da pagina de micangas, onde a arte era quadrada */
+  .hero-grid{display:grid;grid-template-columns:.94fr 1.06fr;
+    grid-template-areas:"topo img" "btn img" "checks img";
+    gap:0 clamp(26px,4vw,52px);align-items:center}
+  .hero-topo{grid-area:topo;text-align:center}
+  .hero-img{grid-area:img}
+  .hero-btn{grid-area:btn;margin:26px 0 0}
+  .checks{grid-area:checks}
+  .hero h1{margin:0 0 16px;font-size:clamp(32px,5.4vw,55px)}
+  .hero .sub{margin-left:auto;margin-right:auto;font-size:clamp(16px,2vw,19px)}
+  .checks{display:grid;gap:11px;margin:24px 0 0}
+  .checks li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:15.5px}
+  .ck{width:21px;height:21px;border-radius:50%;background:var(--verde);color:#fff;flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:1px}
+  .hero-img img{width:100%;height:auto;margin:0 auto;border-radius:22px;
+    box-shadow:0 20px 50px rgba(122,52,17,.24)}
+  .subcta{margin-top:12px;font-size:13px;color:var(--cinza)}
 
-/* RECEBE */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#fff;border:1px solid var(--creme-esc);border-radius:14px;padding:18px 14px;text-align:center;
-  box-shadow:var(--sombra);transition:transform .2s}
-.card:hover{transform:translateY(-3px)}
-.card .ic{display:flex;align-items:center;justify-content:center;height:44px;margin-bottom:6px}
-.card .ic svg{width:32px;height:32px;stroke:var(--laranja);stroke-width:1.5;fill:none;
-  stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
-.card:hover .ic svg{transform:scale(1.08)}
-.card b{display:block;font-family:'Space Grotesk',sans-serif;font-size:.95rem;margin-bottom:4px}
-.card .qtd{display:block;font-size:.68rem;color:var(--laranja);font-weight:700;
-  text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
-.card span.d{font-size:.78rem;color:var(--texto-suave);line-height:1.45;display:block}
-.lista{background:#fff;border-radius:14px;padding:20px;margin-top:16px;border:1px solid var(--creme-esc)}
-.lista li{list-style:none;padding:9px 0 9px 30px;position:relative;font-size:.92rem;border-bottom:1px solid var(--creme)}
-.lista li:last-child{border:none}
-.lista li:before{content:"✓";position:absolute;left:4px;color:var(--verde);font-weight:700}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:46px}
+  .stat{background:var(--creme);border:1px solid var(--borda);border-radius:14px;padding:20px 14px;text-align:center}
+  .stat b{display:block;font-size:clamp(25px,3.6vw,34px);color:var(--turq);font-weight:800;line-height:1}
+  .stat span{font-size:12.5px;color:var(--cinza);display:block;margin-top:5px}
 
-/* PROVA */
-.prova{background:var(--creme-esc)}
-.palco-prints{position:relative}
-.prints{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:6px 20px;margin:0 -20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.prints::-webkit-scrollbar{display:none}
-/* os vizinhos ficam esmaecidos e menores: da profundidade e deixa claro qual
-   card esta em foco sem precisar de mascara ou gradiente por cima */
-.print{flex:0 0 76%;max-width:286px;scroll-snap-align:center;border-radius:16px;
-  overflow:hidden;background:#fff;border:1px solid rgba(107,45,14,.10);
-  box-shadow:0 6px 20px rgba(107,45,14,.13);opacity:.42;transform:scale(.93);
-  transition:opacity .28s ease,transform .28s ease}
-.print.on{opacity:1;transform:scale(1)}
-/* durante o salto do loop a transicao e desligada: sem isso o card que entra
-   no lugar animaria de .42 para 1 e apareceria um flash na troca */
-.prints.sem-anim .print{transition:none}
-/* aspect-ratio trava o espaco antes da imagem chegar: sem isso a secao pula (CLS) */
-.print img{display:block;width:100%;height:auto;aspect-ratio:720/1366;background:#EDE4DA}
-/* bolinha ativa vira pilula alongada em vez de so mudar de cor */
-.pontos{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:16px}
-.ponto{width:7px;height:7px;border-radius:99px;background:#CFBEAB;border:none;padding:0;
-  cursor:pointer;transition:width .25s ease,background .25s ease}
-.ponto.on{width:24px;background:var(--laranja)}
+  /* ---------- DORES ---------- */
+  .dores{background:var(--turq-esc);color:#fff;padding:clamp(68px,9vw,112px) 0}
+  .d-topo{text-align:center;max-width:840px;margin:0 auto}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:600;letter-spacing:2.6px;
+    text-transform:uppercase;color:#E5A67E;margin-bottom:20px}
+  .d-headline{font-size:clamp(27px,4.3vw,45px);line-height:1.2;letter-spacing:-.6px;
+    color:#fff;font-weight:800;margin-bottom:20px}
+  .d-headline .destaque{font-family:var(--serif);font-style:italic;font-weight:600;
+    color:#FFC79B;letter-spacing:0;display:inline-block}
+  .d-sub{font-size:clamp(15.5px,1.75vw,18.5px);line-height:1.62;color:#E6C3A9;max-width:660px;margin:0 auto}
+  .problemas{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.8vw,20px);
+    max-width:960px;margin:clamp(44px,5.5vw,64px) auto 0}
+  .problema{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+    border-radius:16px;padding:28px 24px;transition:background .2s}
+  .problema:hover{background:rgba(255,255,255,.095)}
+  .problema .p-ico{font-size:26px;display:block;margin-bottom:14px;line-height:1}
+  .problema b{display:block;font-size:17.5px;color:#fff;margin-bottom:8px;line-height:1.3}
+  .problema p{font-size:15px;line-height:1.55;color:#E6C3A9}
+  .transicao{text-align:center;max-width:700px;margin:clamp(44px,5vw,60px) auto 0;
+    font-size:clamp(16px,1.95vw,20px);line-height:1.6;color:#E6C3A9}
+  @media(max-width:820px){.problemas{grid-template-columns:1fr;max-width:520px}}
 
-/* BONUS */
-.bonus{background:var(--escuro);color:#F3E9DE}
-.bonus h2{color:#fff}
-.bonus p.subtit{color:#C9B5A3}
-.bcard{position:relative;background:#fff;border-radius:16px;margin-bottom:16px;overflow:hidden;
-  box-shadow:0 8px 24px rgba(0,0,0,.22)}
-.bcard .capa{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--creme-esc)}
-/* tag colada na borda esquerda, sobrepondo o topo da capa */
-.bcard .n{position:absolute;top:14px;left:0;z-index:2;background:var(--creme);color:var(--texto);
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
-  padding:7px 14px 7px 12px;border-radius:0 8px 8px 0;white-space:nowrap;box-shadow:0 3px 12px rgba(107,45,14,.22)}
-.bcard .txt{padding:16px 18px 18px}
-.bcard b{display:block;color:var(--texto);font-family:'Space Grotesk',sans-serif;font-size:1.05rem;margin-bottom:5px;line-height:1.25}
-.bcard span{font-size:.85rem;color:var(--texto-suave);display:block;line-height:1.5}
-.bcard .val{font-size:.75rem;color:#C1553A;text-decoration:line-through;margin-top:9px;display:block;font-weight:700}
-.btotal{text-align:center;margin-top:24px;font-family:'Space Grotesk',sans-serif;font-size:1.15rem;color:#fff;line-height:1.5}
-.btotal em{color:#7BD99F;font-style:normal;font-weight:700}
+  /* ---------- DESEJO · para que serve ---------- */
+  .desejo{background:var(--creme)}
+  .usos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+  .uso{background:#fff;border:1px solid var(--borda);border-radius:16px;
+    padding:26px 20px;text-align:center;transition:transform .16s,box-shadow .16s}
+  .uso:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(122,52,17,.10)}
+  .uso .u-ico{font-size:30px;display:block;margin-bottom:12px;line-height:1}
+  .uso b{display:block;font-size:17px;color:var(--turq);margin-bottom:7px}
+  .uso span{font-size:14.5px;color:var(--cinza);line-height:1.55;display:block}
+  @media(max-width:860px){.usos{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){
+    .usos{gap:11px}
+    .uso{padding:20px 13px}
+    .uso .u-ico{font-size:25px;margin-bottom:9px}
+    .uso b{font-size:15.5px}
+    .uso span{font-size:13.5px;line-height:1.45}
+  }
 
-/* PRICING */
-.plano{background:#fff;border:2px solid var(--creme-esc);border-radius:18px;padding:24px 20px;margin-bottom:18px;position:relative}
-.plano.dest{border-color:var(--laranja);box-shadow:var(--sombra-fd)}
-.tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--laranja);color:#fff;
-  font-size:.68rem;font-weight:700;padding:6px 16px;border-radius:99px;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
-.plano h3{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--texto-suave);text-align:center;margin-bottom:14px}
-.preco{text-align:center;margin-bottom:18px}
-.preco .de{display:block;font-size:.85rem;color:#C1553A;text-decoration:line-through;font-weight:600}
-.preco .por{font-family:'Space Grotesk',sans-serif;font-size:3.1rem;font-weight:700;color:var(--texto);
-  line-height:1;display:inline-flex;align-items:flex-start;justify-content:center;gap:2px}
-.preco .por .cifra{font-size:1.3rem;margin-top:.45em;font-weight:500}
-.preco .por .cent{font-size:1.35rem;margin-top:.3em;letter-spacing:-.01em}
-.preco .par{display:block;font-size:.8rem;color:var(--texto-suave);margin-top:6px}
-.economiza{display:inline-block;background:var(--verde-claro);color:var(--verde);font-size:.75rem;font-weight:700;
-  padding:5px 12px;border-radius:99px;margin-top:10px}
-.plano ul{list-style:none;margin-bottom:20px}
-.plano li{padding:8px 0 8px 26px;position:relative;font-size:.88rem;line-height:1.5}
-.plano li:before{content:"✓";position:absolute;left:2px;color:var(--verde);font-weight:700}
-.plano.basico li:before{color:#C9B7A5}
-.badges{display:flex;justify-content:center;gap:14px;margin-top:14px;flex-wrap:wrap}
-.badges span{font-size:.7rem;color:var(--texto-suave);display:flex;align-items:center;gap:4px}
-.alerta{background:#FFF3E6;border:1px solid #F2D7B8;border-radius:10px;padding:11px;text-align:center;
-  font-size:.78rem;color:#8A5424;font-weight:600;margin-bottom:16px}
+  /* ---------- OS 14 ESTILOS ---------- */
+  .receber{background:#fff}
+  /* os 14 tipos e a contagem de modelos saem do catalogo do entregavel:
+     entregaveis/50-moldes-luminaria-origami/moldes/ */
+  .estilos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px;text-align:left}
+  .estilo{background:var(--creme);border:1px solid var(--borda);border-radius:16px;
+    padding:22px 20px;transition:transform .16s,box-shadow .16s}
+  .estilo:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(122,52,17,.10)}
+  .estilo svg{width:30px;height:30px;stroke:var(--turq);fill:none;stroke-width:1.5;
+    stroke-linecap:round;stroke-linejoin:round;display:block;margin-bottom:13px}
+  .estilo .qtd{display:inline-block;background:var(--mostarda-claro);color:#9A6B08;
+    font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+    padding:4px 9px;border-radius:6px;margin-bottom:9px}
+  .estilo b{display:block;font-size:16.5px;color:var(--turq);margin-bottom:6px;line-height:1.25}
+  .estilo .d{font-size:14px;color:var(--cinza);line-height:1.5;display:block}
+  @media(max-width:980px){.estilos{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:720px){.estilos{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:440px){.estilos{grid-template-columns:1fr}}
 
-/* GARANTIA */
-.garantia{background:var(--creme-esc);text-align:center}
-.selo-g{width:120px;height:120px;border-radius:50%;background:#fff;border:3px dashed var(--laranja);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 20px;
-  font-family:'Space Grotesk',sans-serif;color:var(--laranja);box-shadow:var(--sombra)}
-.selo-g b{font-size:2.1rem;line-height:1}
-.selo-g span{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em}
-.garantia p{font-size:.95rem;color:var(--texto-suave);margin-top:12px}
+  .lista{margin-top:38px;background:var(--creme);border:1px solid var(--borda);
+    border-radius:18px;padding:clamp(24px,3.4vw,34px);text-align:left}
+  .lista ul{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+  /* marcador absoluto, e nao um item de flex: com display:flex o <b> do comeco da
+     frase virava uma coluna e o resto do texto virava outra */
+  .lista li{list-style:none;position:relative;padding-left:32px;font-size:15px;line-height:1.5}
+  .lista li::before{content:"✓";position:absolute;left:0;top:2px;width:21px;height:21px;
+    border-radius:50%;background:var(--verde);color:#fff;display:flex;
+    align-items:center;justify-content:center;font-size:12px;font-weight:700}
+  @media(max-width:760px){.lista ul{grid-template-columns:1fr}}
 
-/* FAQ */
-.faq details{background:#fff;border:1px solid var(--creme-esc);border-radius:12px;margin-bottom:10px;overflow:hidden}
-.faq summary{padding:16px 18px;font-weight:600;font-size:.93rem;cursor:pointer;list-style:none;
-  display:flex;justify-content:space-between;align-items:center;gap:12px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary:after{content:"+";font-size:1.4rem;color:var(--laranja);font-weight:400;flex-shrink:0;transition:transform .2s}
-.faq details[open] summary:after{transform:rotate(45deg)}
-.faq p{padding:0 18px 16px;font-size:.88rem;color:var(--texto-suave)}
+  /* ---------- CARROSSEL DE AMOSTRAS ---------- */
+  .amostras{background:#fff;overflow:hidden}
+  .trilho{display:flex;gap:18px;margin-top:40px;padding-bottom:14px;
+    overflow-x:auto;scroll-snap-type:none;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .trilho::-webkit-scrollbar{display:none}
+  .trilho figure{flex:0 0 clamp(240px,31vw,312px);scroll-snap-align:none;margin:0}
+  .trilho img{width:100%;height:auto;border-radius:14px;border:1px solid var(--borda);
+    background:#fff;box-shadow:0 10px 26px rgba(122,52,17,.10)}
 
-/* FINAL */
-.final{background:var(--laranja);color:#fff;text-align:center}
-.final h2{color:#fff;font-size:1.85rem;margin-bottom:12px}
-.final p{font-size:1rem;margin-bottom:24px;color:#FFEADE}
-.final .cta{background:#fff;color:var(--laranja-esc);box-shadow:0 6px 20px rgba(0,0,0,.18)}
-.ancora-perda{margin-top:18px;font-family:'Space Grotesk',sans-serif;font-size:1rem;color:#FFDCC8;line-height:1.5}
+  /* ---------- QUANTO VALE · prova de mercado ---------- */
+  .vale{background:var(--creme);overflow:hidden}
+  .conta{display:grid;grid-template-columns:1fr auto 1.25fr;gap:clamp(14px,2.2vw,26px);
+    align-items:stretch;margin-top:46px;text-align:left}
+  .lado{border-radius:18px;padding:clamp(24px,3vw,32px)}
+  .lado.custo{background:#fff;border:1px solid var(--borda)}
+  .lado.venda{background:#EAF7F2;border:1px solid #C9E9DC}
+  .rotulo{display:block;font-size:12px;font-weight:800;letter-spacing:1.4px;
+    text-transform:uppercase;margin-bottom:12px}
+  .custo .rotulo{color:#9A7B4F}
+  .venda .rotulo{color:var(--verde-esc)}
+  .lado .valor{font-size:clamp(38px,5.4vw,52px);font-weight:800;line-height:1;margin-bottom:16px}
+  .custo .valor{color:var(--tinta)}
+  .venda .valor{color:var(--verde-esc)}
+  .lado .valor small{display:block;font-size:14px;font-weight:600;color:var(--cinza);
+    margin-top:7px;letter-spacing:0}
+  .lado ul{display:grid;gap:9px}
+  .lado li{list-style:none;font-size:14.5px;line-height:1.45;color:var(--cinza);
+    padding-left:16px;position:relative}
+  .lado li::before{content:"•";position:absolute;left:0;color:var(--coral);font-weight:800}
+  .venda li b{color:var(--tinta)}
+  .seta{display:flex;align-items:center;justify-content:center;font-size:52px;
+    color:var(--coral);font-weight:800;-webkit-text-stroke:2px currentColor;line-height:1}
+  .chamada-provas{margin:38px auto 0;font-family:var(--serif);font-style:italic;
+    font-weight:600;font-size:clamp(19px,2.5vw,25px);color:var(--turq);
+    display:flex;align-items:center;justify-content:center;gap:10px}
+  .seta-baixo{font-style:normal;font-family:var(--sans);color:var(--coral);
+    font-size:.85em;animation:pula 1.8s ease-in-out infinite}
+  @keyframes pula{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+  @media(prefers-reduced-motion:reduce){.seta-baixo{animation:none}}
 
-/* o cinza-marrom antigo caia para 3.2:1 sobre o rust — este tom quente sobe para 5.2:1 */
-footer{background:var(--escuro);color:#D3A88C;text-align:center;padding:30px 20px;font-size:.72rem;line-height:1.7}
+  /* carrossel dos prints — desliza sozinho, mas continua arrastável */
+  .provas{margin-top:18px;scroll-snap-type:none;scrollbar-width:none}
+  .provas::-webkit-scrollbar{display:none}
+  .provas figure{flex:0 0 clamp(288px,33vw,360px);scroll-snap-align:none}
+  .provas img{border-radius:12px;border:1px solid var(--borda);background:#fff;
+    box-shadow:0 8px 22px rgba(122,52,17,.10);width:100%;height:auto}
+  .nota-provas{max-width:740px;margin:28px auto 0;font-size:13.5px;line-height:1.62;color:var(--cinza)}
+  @media(max-width:860px){
+    .conta{grid-template-columns:1fr}
+    .seta{transform:rotate(90deg);padding:4px 0}
+  }
 
-/* POPUP */
-#pop{position:fixed;inset:0;background:rgba(107,45,14,.7);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
-#pop.on{display:flex}
-.popbox{background:#fff;border-radius:20px;max-width:400px;width:100%;padding:28px 22px;text-align:center;position:relative;box-shadow:var(--sombra-fd)}
-.popbox .x{position:absolute;top:12px;right:16px;font-size:1.5rem;color:#C9B7A5;cursor:pointer;background:none;border:none;line-height:1}
-.popbox h3{font-size:1.35rem;margin-bottom:10px}
-.popbox p{font-size:.9rem;color:var(--texto-suave);margin-bottom:18px}
-.popbox .dif{background:var(--verde-claro);border-radius:12px;padding:14px;margin-bottom:18px}
-.popbox .dif b{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;color:var(--verde);display:block}
-.popbox .dif span{font-size:.8rem;color:var(--texto-suave)}
-.popbox .naovaler{display:block;width:100%;margin-top:12px;padding:13px 16px;
-  background:none;border:1.5px solid #E0D2C3;border-radius:12px;color:#8C7563;
-  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.76rem;
-  text-transform:uppercase;letter-spacing:.05em;text-decoration:none;cursor:pointer;
-  transition:border-color .18s,color .18s}
-.popbox .naovaler:hover{border-color:#B5A395;color:var(--texto-suave)}
+  /* ---------- BONUS ---------- */
+  .bonus{background:var(--turq-esc);color:#fff}
+  .bonus h2{color:#fff}
+  .bonus .sub{color:#E6C3A9}
+  .bonus-lista{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:44px}
+  .card-bonus{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);
+    border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+  .capa-bonus{background:rgba(0,0,0,.12);line-height:0}
+  .capa-bonus img{width:100%;height:auto}
+  .txt-bonus{padding:22px 24px 24px}
+  /* com 4 bonus a lista fecha em duas linhas cheias, e o card do "vao juntos"
+     sobraria sozinho numa terceira — por isso ele atravessa as duas colunas */
+  .card-bonus.juntos{background:rgba(224,162,42,.10);border-color:rgba(224,162,42,.45);
+    justify-content:center;grid-column:1/-1;text-align:center}
+  .card-bonus b{display:block;font-size:17px;margin-bottom:5px;color:#fff}
+  .card-bonus span{font-size:14.5px;color:#E6C3A9;line-height:1.55}
+  .card-bonus .valor s{color:#C09A7E;font-weight:600;margin-right:5px}
+  .card-bonus .valor{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;
+    letter-spacing:.6px;color:var(--mostarda);text-transform:uppercase}
+  @media(max-width:700px){.bonus-lista{grid-template-columns:1fr}}
+
+  /* ---------- DEPOIMENTOS · carrossel em leque ---------- */
+  .deps{background:var(--creme)}
+  /* palco de altura fixa: os slides sao absolutos e so o do centro manda no tamanho */
+  .dep-palco{position:relative;margin-top:42px;height:clamp(520px,78vw,780px);
+    display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .dep-trilho{position:relative;width:100%;height:100%}
+  .dep-slide{position:absolute;top:50%;left:50%;margin:0;width:clamp(270px,35vw,395px);
+    transform:translate(-50%,-50%) scale(.78);opacity:0;pointer-events:none;
+    transition:transform .5s cubic-bezier(.25,.9,.3,1),opacity .5s ease;z-index:1}
+  .dep-slide img{width:100%;height:auto;border-radius:16px;border:1px solid var(--borda);
+    background:#fff;box-shadow:0 14px 34px rgba(122,52,17,.18)}
+  /* centro: maior e nitido | laterais: menores e apagadas */
+  .dep-slide.centro{transform:translate(-50%,-50%) scale(1);opacity:1;z-index:3}
+  .dep-slide.esq{transform:translate(calc(-50% - 74%),-50%) scale(.8);opacity:.45;z-index:2}
+  .dep-slide.dir{transform:translate(calc(-50% + 74%),-50%) scale(.8);opacity:.45;z-index:2}
+  .dep-seta{position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+    width:46px;height:46px;border-radius:50%;border:1px solid var(--borda);
+    background:#fff;color:var(--turq);font-size:26px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-family:inherit;
+    box-shadow:0 6px 18px rgba(122,52,17,.16);transition:background .16s,transform .16s}
+  .dep-seta:hover{background:var(--turq);color:#fff}
+  .dep-seta.ant{left:max(12px,4vw)}
+  .dep-seta.prox{right:max(12px,4vw)}
+  .dep-dots{display:flex;gap:9px;justify-content:center;margin-top:26px}
+  .dep-dots button{width:9px;height:9px;border-radius:50%;border:none;padding:0;
+    background:var(--borda);cursor:pointer;transition:background .2s,width .2s}
+  .dep-dots button[aria-current="true"]{background:var(--coral);width:26px;border-radius:10px}
+  @media(max-width:600px){
+    .dep-slide.esq{transform:translate(calc(-50% - 62%),-50%) scale(.74);opacity:.32}
+    .dep-slide.dir{transform:translate(calc(-50% + 62%),-50%) scale(.74);opacity:.32}
+    .dep-seta{width:38px;height:38px;font-size:22px}
+  }
+
+  /* ---------- OFERTA ---------- */
+  .oferta{background:#fff}
+  .planos{display:grid;grid-template-columns:1fr 1.12fr;gap:22px;margin-top:46px;align-items:start}
+  .plano{background:#fff;border:1px solid var(--borda);border-radius:20px;padding:30px 26px;text-align:left}
+  .plano.destaque{border:2px solid var(--coral);box-shadow:0 20px 50px rgba(210,84,42,.16);position:relative;padding-top:38px}
+  .fita{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--coral);color:#fff;
+    font-size:11.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+    padding:8px 18px;border-radius:100px;white-space:nowrap}
+  .plano-nome{font-size:19px;font-weight:800;color:var(--turq)}
+  .linha-ancora{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+  .linha-ancora s{color:#A79488;font-size:16px}
+  .economize{background:#EAF7F2;color:var(--verde-esc);font-size:11.5px;font-weight:800;
+    letter-spacing:.5px;padding:5px 10px;border-radius:6px;text-transform:uppercase}
+  .plano-preco{font-size:clamp(44px,6vw,60px);font-weight:800;color:var(--tinta);line-height:1;margin:8px 0 4px}
+  .plano-preco small{font-size:22px;font-weight:700;vertical-align:top;margin-right:3px;color:var(--cinza)}
+  .plano-obs{font-size:13.5px;color:var(--cinza);margin-bottom:20px}
+  .timer{background:var(--coral-nevoa);color:var(--coral-esc);font-size:14px;font-weight:700;
+    padding:11px;border-radius:10px;text-align:center;margin-bottom:18px}
+  .inclui{display:grid;gap:10px;margin-bottom:22px}
+  .inclui li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45}
+  .inclui li.fora{opacity:.45}
+  .ckm{width:20px;height:20px;border-radius:50%;background:var(--verde);color:#fff;flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:2px}
+  .ckm.nao{background:#C6B5A8}
+  .divisor{border:none;border-top:1px dashed var(--borda);margin:20px 0}
+  .titulo-bonus{font-size:12.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+    color:var(--coral);margin-bottom:12px}
+  .lista-bonus{display:grid;gap:9px;margin-bottom:18px}
+  .lista-bonus li{list-style:none;display:flex;gap:9px;font-size:14.5px;line-height:1.45}
+  .selos-pgto{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:14px;
+    font-size:12.5px;color:var(--cinza)}
+  @media(max-width:820px){
+    .planos{grid-template-columns:1fr}
+  }
+
+  .microaviso{margin-top:12px;text-align:center;font-size:13px;font-weight:600;
+    color:var(--coral);line-height:1.4}
+
+  /* ---------- POPUP DE UPSELL ---------- */
+  .modal[hidden]{display:none}
+  .modal{position:fixed;inset:0;z-index:99;display:flex;align-items:center;
+    justify-content:center;padding:20px}
+  .modal-fundo{position:absolute;inset:0;background:rgba(90,36,9,.62);
+    backdrop-filter:blur(2px);animation:aparece .18s ease}
+  .modal-caixa{position:relative;background:#fff;border-radius:20px;
+    padding:clamp(28px,4vw,40px) clamp(22px,3.4vw,36px);width:100%;max-width:470px;
+    text-align:center;box-shadow:0 30px 70px rgba(90,36,9,.34);
+    animation:sobe .22s cubic-bezier(.2,.9,.3,1.2);max-height:92vh;overflow-y:auto}
+  @keyframes aparece{from{opacity:0}to{opacity:1}}
+  @keyframes sobe{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+  .modal-x{position:absolute;top:12px;right:14px;background:none;border:none;
+    font-size:26px;line-height:1;color:#A79488;cursor:pointer;padding:6px;font-family:inherit}
+  .modal-x:hover{color:var(--tinta)}
+  .modal-caixa h3{font-size:clamp(21px,3vw,26px);color:var(--turq);margin-bottom:10px}
+  .modal-sub{font-size:15px;color:var(--cinza);line-height:1.55;margin-bottom:22px}
+  .modal-preco{border:2px dashed #C9E9DC;background:#EAF7F2;border-radius:14px;
+    padding:20px;margin-bottom:22px}
+  .modal-preco s{color:#8FA7A0;font-size:16px}
+  .modal-valor{font-size:clamp(38px,6vw,48px);font-weight:800;color:var(--verde-esc);
+    line-height:1;margin:4px 0 6px}
+  .modal-valor small{font-size:20px;vertical-align:top;margin-right:3px}
+  .modal-preco span{display:block;font-size:13.5px;color:var(--verde-esc);font-weight:600}
+  .modal-nao{display:block;width:100%;margin-top:12px;background:none;
+    border:1px solid var(--borda);border-radius:12px;padding:14px;
+    font-family:inherit;font-size:13.5px;font-weight:700;letter-spacing:.4px;
+    text-transform:uppercase;color:var(--cinza);cursor:pointer;text-decoration:none}
+  .modal-nao:hover{background:var(--creme);color:var(--tinta)}
+
+  /* ---------- GARANTIA ---------- */
+  .garantia{background:var(--creme)}
+  .g-box{display:grid;grid-template-columns:auto 1fr;gap:clamp(22px,3.4vw,40px);align-items:center;
+    background:#fff;border:1px solid var(--borda);border-radius:20px;padding:clamp(28px,4vw,44px);
+    box-shadow:0 14px 36px rgba(122,52,17,.08)}
+  .selo{width:112px;height:112px;border-radius:50%;background:var(--verde);color:#fff;flex:none;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    box-shadow:0 10px 26px rgba(31,164,99,.3)}
+  .selo b{font-size:40px;font-weight:800;line-height:1}
+  .selo span{font-size:13px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700}
+  .g-box h3{margin-bottom:10px}
+  .g-box p{font-size:15.5px;color:var(--cinza);line-height:1.6}
+  @media(max-width:640px){.g-box{grid-template-columns:1fr;text-align:center;justify-items:center}}
+
+  /* ---------- FAQ ---------- */
+  .faq{background:#fff}
+  .lista-faq{max-width:800px;margin:42px auto 0;display:grid;gap:12px}
+  .faq details{background:var(--creme);border:1px solid var(--borda);border-radius:14px;overflow:hidden}
+  .faq summary{padding:20px 24px;font-weight:700;font-size:16px;cursor:pointer;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-size:24px;color:var(--turq);font-weight:400;flex:none;line-height:1}
+  .faq details[open] summary::after{content:"–"}
+  .faq details[open] summary{color:var(--turq)}
+  .faq p{padding:0 24px 22px;font-size:15px;color:var(--cinza);line-height:1.65}
+
+  /* ---------- FINAL ---------- */
+  .final{background:var(--turq-esc);color:#fff;text-align:center}
+  .final h2{color:#fff;margin-bottom:16px}
+  .final .sub{color:#E6C3A9;margin-bottom:12px}
+  .caixa-final{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+    border-radius:20px;padding:clamp(28px,4vw,44px);max-width:620px;margin:36px auto 0}
+  .preco-final{font-size:clamp(42px,6vw,58px);font-weight:800;line-height:1;margin:6px 0 6px}
+  .preco-final small{font-size:20px;vertical-align:top;margin-right:3px;opacity:.8}
+  .de-final{color:#C09A7E;font-size:15px}
+  .de-final s{opacity:.8}
+  .final .btn{margin-top:22px}
+  .assinatura{margin-top:34px;font-size:13.5px;color:#C09A7E}
+
+  /* ---------- RODAPE ---------- */
+  footer{background:#401903;color:#C09A7E;text-align:center;padding:34px 20px;font-size:13px;line-height:1.7}
+  footer b{color:#F0D8C4}
+  footer a{color:#FFC79B}
+
+  @media(max-width:820px){
+    .hero-grid{grid-template-columns:1fr;grid-template-areas:"topo" "img" "btn" "checks";gap:0}
+    .hero-img{margin:24px 0 0}
+    .hero-btn{margin-top:26px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+  }
 </style>
 </head>
 <body>
 
-<!-- 1. STICKY BAR -->
-<div id="sticky">
-  <div class="chamada">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Oportunidade única:
+<!-- ============ BARRA DE URGENCIA ============ -->
+<div class="barra">
+  <div class="l1">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    Oportunidade única
   </div>
-  <div class="prazo">Promoção válida somente até hoje, <span id="dataHoje"></span></div>
+  <div class="l2">Promoção válida somente até hoje, <span id="dataHoje"></span></div>
 </div>
 
-<!-- 2. HERO -->
-<section class="hero">
-  <div class="wrap">
-    <span class="selo">Não precisa saber origami</span>
-    <h1><span class="num">50</span> Moldes de Luminárias de Origami</h1>
-    <p class="sub">Imprima, dobre e monte luminárias com cara de loja de decoração — mesmo que você <b>nunca tenha feito uma dobradura na vida</b>.</p>
-
-    <picture>
-      <source srcset="assets/hero.webp" type="image/webp">
-      <img class="heroimg" src="assets/hero.png" alt="Kit 50 Moldes de Luminárias de Origami com guia de dobras, ficha de montagem, manual de iluminação LED, cartões dos modelos e seis luminárias montadas" width="1100" height="1094" fetchpriority="high">
-    </picture>
-
-    <a class="cta js-planos">Quero os 50 moldes</a>
-    <p class="subcta">Acesso imediato · Pagamento único · Garantia de 15 dias</p>
-
-    <div class="stats">
-      <div class="stat"><b>50</b><span>Moldes</span></div>
-      <div class="stat"><b>14</b><span>Estilos</span></div>
-      <div class="stat"><b>4.9</b><span>Avaliação</span></div>
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-topo">
+      <h1>50 Moldes de Luminárias de Origami <span class="script cr">Para Fazer em Casa</span></h1>
+      <p class="sub">Imprima, dobre e monte luminárias com cara de loja de decoração — mesmo que você <b>nunca tenha feito uma dobradura na vida</b>.</p>
     </div>
-  </div>
-</section>
 
-<!-- 3. DOR -->
-<section class="dor">
-  <div class="wrap">
-    <h2>Você já tentou seguir um tutorial de origami e desistiu no meio?</h2>
-    <ul>
-      <li>Pausa o vídeo mil vezes e mesmo assim <b>a dobra sai no lugar errado</b></li>
-      <li>Acha um diagrama na internet e vem sem medida nenhuma — o papel não fecha</li>
-      <li>Marca no olho, erra o ângulo e a luminária fica torta de um lado</li>
-      <li>Gasta folha atrás de folha num teste que vai direto pro lixo</li>
-      <li>Não sabe qual lâmpada pode usar e fica com medo de esquentar o papel</li>
-      <li>Tem medo de cobrar caro por uma peça que não parece profissional</li>
+    <div class="hero-img">
+      <img src="assets/hero.webp" srcset="assets/hero-420.webp 420w, assets/hero-700.webp 700w, assets/hero.webp 1400w" sizes="(max-width:820px) 92vw, 52vw" alt="Dez luminárias de papel montadas a partir dos moldes: três pendentes acesos e sete peças de mesa sobre uma mesa de madeira" width="1400" height="782" fetchpriority="high">
+    </div>
+
+    <div class="hero-btn centro">
+      <button class="btn ir-oferta">QUERO OS 50 MOLDES</button>
+      <p class="subcta">Acesso imediato · Pagamento único · Garantia de 15 dias</p>
+    </div>
+
+    <ul class="checks">
+      <li><span class="ck">✓</span> 50 moldes em PDF, prontos para imprimir em folha A4</li>
+      <li><span class="ck">✓</span> Todas as linhas já desenhadas: corte, dobra e aba de cola</li>
+      <li><span class="ck">✓</span> Medida real em cada molde, com barra de conferência</li>
+      <li><span class="ck">✓</span> Nível: começa de quem nunca dobrou papel</li>
     </ul>
-    <p class="vira">A verdade é que o problema nunca foi a sua paciência. Foi não ter as linhas certas já desenhadas na folha.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>50</b><span>moldes prontos</span></div>
+      <div class="stat"><b>14</b><span>estilos diferentes</span></div>
+      <div class="stat"><b>15</b><span>dias de garantia</span></div>
+      <div class="stat"><b>∞</b><span>acesso vitalício</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ DORES ============ -->
+<section class="dores">
+  <div class="wrap">
+    <div class="d-topo">
+      <span class="eyebrow">Talvez já tenha acontecido com você</span>
+      <h2 class="d-headline">Já tentou seguir um tutorial de origami <span class="destaque">e desistiu no meio?</span></h2>
+      <p class="d-sub">Não é falta de paciência. É que quase tudo que se acha por aí sobre luminária de papel é foto bonita sem medida nenhuma.</p>
+    </div>
+
+    <div class="problemas">
+      <div class="problema">
+        <span class="p-ico">⏯️</span>
+        <b>Pausa o vídeo mil vezes</b>
+        <p>E mesmo assim a dobra sai no lugar errado. O vídeo mostra a mão do outro, nunca a linha na sua folha.</p>
+      </div>
+      <div class="problema">
+        <span class="p-ico">📐</span>
+        <b>Diagrama sem medida nenhuma</b>
+        <p>Você acha um desenho na internet, imprime, dobra — e o papel simplesmente não fecha. Faltava a medida que ninguém põe.</p>
+      </div>
+      <div class="problema">
+        <span class="p-ico">📏</span>
+        <b>Marcado no olho</b>
+        <p>Erra o ângulo por dois milímetros e a luminária fica torta de um lado. Só dá para ver quando a cola já secou.</p>
+      </div>
+      <div class="problema">
+        <span class="p-ico">🗑️</span>
+        <b>Folha atrás de folha no lixo</b>
+        <p>Cada teste vira papel amassado. No fim da tarde o gasto foi real e o resultado foi nenhum.</p>
+      </div>
+      <div class="problema">
+        <span class="p-ico">💡</span>
+        <b>Medo de acender</b>
+        <p>Não saber qual lâmpada pode usar deixa a peça pronta em cima do armário, apagada, sem nunca virar luminária.</p>
+      </div>
+      <div class="problema">
+        <span class="p-ico">🏷️</span>
+        <b>Medo de cobrar</b>
+        <p>Você até faria para vender, mas não tem coragem de pedir preço de loja por uma peça que não parece de loja.</p>
+      </div>
+    </div>
+
+    <p class="transicao">A verdade é que o problema nunca foi a sua paciência. Foi não ter as linhas certas já desenhadas na folha.</p>
   </div>
 </section>
 
-<!-- 3.5 CARROSSEL DE PEÇAS -->
-<section class="carrossel">
+<!-- ============ AMOSTRAS ============ -->
+<section class="amostras">
+  <div class="wrap centro">
+    <span class="pill turq">Alguns dos modelos</span>
+    <h2 style="margin:16px 0 12px">Olha o que dá <span class="script tq">pra montar</span></h2>
+    <p class="sub">Luminárias reais montadas a partir dos moldes do catálogo. Arraste para o lado e escolha por onde começar.</p>
+  </div>
   <div class="wrap">
-    <h2 class="tit">Olha o que dá pra montar</h2>
-    <p class="subtit">Luminárias reais montadas a partir dos moldes do catálogo — arraste para o lado</p>
-
-    <div class="palco">
-    <button class="seta seta-e" id="setaE" onclick="mover(-1)" aria-label="Luminária anterior">‹</button>
-    <button class="seta seta-d" id="setaD" onclick="mover(1)" aria-label="Próxima luminária">›</button>
-    <div class="trilho" id="trilho">
-      <figure class="slide"><img src="assets/pecas-web/01-esfera-sanfona.webp" alt="Luminária de mesa esférica em sanfona sobre base de madeira" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/02-cristal-facetado.webp" alt="Luminária de mesa em formato de cristal facetado" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/03-pendente-petalas.webp" alt="Pendente de papel com pétalas abertas preso por cabo no teto" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/04-balao-sanfona.webp" alt="Pendente esférico em sanfona aceso" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/05-arandela-ogiva.webp" alt="Arandela de parede em losango vertical plissado" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/06-livro-leque.webp" alt="Luminária livro que abre em leque sobre o móvel" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/07-lotus-escamas.webp" alt="Luminária de mesa em lótus de escamas" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/08-espiral-torcida.webp" alt="Luminária de mesa em espiral torcida com pé de metal" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/09-estrela-facetada.webp" alt="Luminária em estrela facetada com pontas em camadas" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/10-lotus-pendente.webp" alt="Luminária de camadas de escamas acesa em tom quente" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/11-esfera-plissada.webp" alt="Luminária esférica achatada plissada acesa em laranja" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/12-cilindro-plissado.webp" alt="Luminária cilíndrica plissada com base" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/13-chapeu-plissado.webp" alt="Abajur clássico de chapéu plissado" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/14-pendente-diamante.webp" alt="Pendente cônico plissado em formato de diamante" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/15-pagode-camadas.webp" alt="Luminária de três camadas em formato de pagode" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/16-bola-magica.webp" alt="Luminária esférica em bola mágica com malha texturizada" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/17-torre-escamas.webp" alt="Luminária torre de escamas empilhadas" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/18-bola-texturizada.webp" alt="Luminária de mesa em bola mágica achatada" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/19-pendente-ondulado.webp" alt="Pendente cônico com borda ondulada" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/20-balao-japones.webp" alt="Balão japonês pendente com borla vermelha" loading="lazy" width="800" height="800"></figure>
-      <figure class="slide"><img src="assets/pecas-web/21-coluna-facetada.webp" alt="Luminária coluna facetada vertical" loading="lazy" width="800" height="800"></figure>
+    <!-- As 21 imagens aparecem duas vezes: a segunda leva serve de emenda para o
+         deslize voltar ao começo sem a pessoa perceber. Se trocar as imagens,
+         trocar nas DUAS levas. -->
+    <div class="trilho modelos" id="modelos">
+      <figure><img src="assets/pecas-web/01-esfera-sanfona.webp" srcset="assets/pecas-sm/01-esfera-sanfona.webp 400w, assets/pecas-web/01-esfera-sanfona.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária de mesa esférica em sanfona sobre base de madeira" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/pecas-web/02-cristal-facetado.webp" srcset="assets/pecas-sm/02-cristal-facetado.webp 400w, assets/pecas-web/02-cristal-facetado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária de mesa em formato de cristal facetado" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/pecas-web/03-pendente-petalas.webp" srcset="assets/pecas-sm/03-pendente-petalas.webp 400w, assets/pecas-web/03-pendente-petalas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Pendente de papel com pétalas abertas preso por cabo no teto" width="800" height="800" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/pecas-web/04-balao-sanfona.webp" srcset="assets/pecas-sm/04-balao-sanfona.webp 400w, assets/pecas-web/04-balao-sanfona.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Pendente esférico em sanfona aceso" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/05-arandela-ogiva.webp" srcset="assets/pecas-sm/05-arandela-ogiva.webp 400w, assets/pecas-web/05-arandela-ogiva.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Arandela de parede em losango vertical plissado" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/06-livro-leque.webp" srcset="assets/pecas-sm/06-livro-leque.webp 400w, assets/pecas-web/06-livro-leque.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária livro que abre em leque sobre o móvel" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/07-lotus-escamas.webp" srcset="assets/pecas-sm/07-lotus-escamas.webp 400w, assets/pecas-web/07-lotus-escamas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária de mesa em lótus de escamas" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/08-espiral-torcida.webp" srcset="assets/pecas-sm/08-espiral-torcida.webp 400w, assets/pecas-web/08-espiral-torcida.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária de mesa em espiral torcida com pé de metal" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/09-estrela-facetada.webp" srcset="assets/pecas-sm/09-estrela-facetada.webp 400w, assets/pecas-web/09-estrela-facetada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária em estrela facetada com pontas em camadas" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/10-lotus-pendente.webp" srcset="assets/pecas-sm/10-lotus-pendente.webp 400w, assets/pecas-web/10-lotus-pendente.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária de camadas de escamas acesa em tom quente" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/11-esfera-plissada.webp" srcset="assets/pecas-sm/11-esfera-plissada.webp 400w, assets/pecas-web/11-esfera-plissada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária esférica achatada plissada acesa em laranja" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/12-cilindro-plissado.webp" srcset="assets/pecas-sm/12-cilindro-plissado.webp 400w, assets/pecas-web/12-cilindro-plissado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária cilíndrica plissada com base" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/13-chapeu-plissado.webp" srcset="assets/pecas-sm/13-chapeu-plissado.webp 400w, assets/pecas-web/13-chapeu-plissado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Abajur clássico de chapéu plissado" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/14-pendente-diamante.webp" srcset="assets/pecas-sm/14-pendente-diamante.webp 400w, assets/pecas-web/14-pendente-diamante.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Pendente cônico plissado em formato de diamante" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/15-pagode-camadas.webp" srcset="assets/pecas-sm/15-pagode-camadas.webp 400w, assets/pecas-web/15-pagode-camadas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária de três camadas em formato de pagode" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/16-bola-magica.webp" srcset="assets/pecas-sm/16-bola-magica.webp 400w, assets/pecas-web/16-bola-magica.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária esférica em bola mágica com malha texturizada" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/17-torre-escamas.webp" srcset="assets/pecas-sm/17-torre-escamas.webp 400w, assets/pecas-web/17-torre-escamas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária torre de escamas empilhadas" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/18-bola-texturizada.webp" srcset="assets/pecas-sm/18-bola-texturizada.webp 400w, assets/pecas-web/18-bola-texturizada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária de mesa em bola mágica achatada" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/19-pendente-ondulado.webp" srcset="assets/pecas-sm/19-pendente-ondulado.webp 400w, assets/pecas-web/19-pendente-ondulado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Pendente cônico com borda ondulada" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/20-balao-japones.webp" srcset="assets/pecas-sm/20-balao-japones.webp 400w, assets/pecas-web/20-balao-japones.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Balão japonês pendente com borla vermelha" width="800" height="800" loading="lazy"></figure>
+      <figure><img src="assets/pecas-web/21-coluna-facetada.webp" srcset="assets/pecas-sm/21-coluna-facetada.webp 400w, assets/pecas-web/21-coluna-facetada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="Luminária coluna facetada vertical" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/01-esfera-sanfona.webp" srcset="assets/pecas-sm/01-esfera-sanfona.webp 400w, assets/pecas-web/01-esfera-sanfona.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/02-cristal-facetado.webp" srcset="assets/pecas-sm/02-cristal-facetado.webp 400w, assets/pecas-web/02-cristal-facetado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/03-pendente-petalas.webp" srcset="assets/pecas-sm/03-pendente-petalas.webp 400w, assets/pecas-web/03-pendente-petalas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/04-balao-sanfona.webp" srcset="assets/pecas-sm/04-balao-sanfona.webp 400w, assets/pecas-web/04-balao-sanfona.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/05-arandela-ogiva.webp" srcset="assets/pecas-sm/05-arandela-ogiva.webp 400w, assets/pecas-web/05-arandela-ogiva.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/06-livro-leque.webp" srcset="assets/pecas-sm/06-livro-leque.webp 400w, assets/pecas-web/06-livro-leque.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/07-lotus-escamas.webp" srcset="assets/pecas-sm/07-lotus-escamas.webp 400w, assets/pecas-web/07-lotus-escamas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/08-espiral-torcida.webp" srcset="assets/pecas-sm/08-espiral-torcida.webp 400w, assets/pecas-web/08-espiral-torcida.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/09-estrela-facetada.webp" srcset="assets/pecas-sm/09-estrela-facetada.webp 400w, assets/pecas-web/09-estrela-facetada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/10-lotus-pendente.webp" srcset="assets/pecas-sm/10-lotus-pendente.webp 400w, assets/pecas-web/10-lotus-pendente.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/11-esfera-plissada.webp" srcset="assets/pecas-sm/11-esfera-plissada.webp 400w, assets/pecas-web/11-esfera-plissada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/12-cilindro-plissado.webp" srcset="assets/pecas-sm/12-cilindro-plissado.webp 400w, assets/pecas-web/12-cilindro-plissado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/13-chapeu-plissado.webp" srcset="assets/pecas-sm/13-chapeu-plissado.webp 400w, assets/pecas-web/13-chapeu-plissado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/14-pendente-diamante.webp" srcset="assets/pecas-sm/14-pendente-diamante.webp 400w, assets/pecas-web/14-pendente-diamante.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/15-pagode-camadas.webp" srcset="assets/pecas-sm/15-pagode-camadas.webp 400w, assets/pecas-web/15-pagode-camadas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/16-bola-magica.webp" srcset="assets/pecas-sm/16-bola-magica.webp 400w, assets/pecas-web/16-bola-magica.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/17-torre-escamas.webp" srcset="assets/pecas-sm/17-torre-escamas.webp 400w, assets/pecas-web/17-torre-escamas.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/18-bola-texturizada.webp" srcset="assets/pecas-sm/18-bola-texturizada.webp 400w, assets/pecas-web/18-bola-texturizada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/19-pendente-ondulado.webp" srcset="assets/pecas-sm/19-pendente-ondulado.webp 400w, assets/pecas-web/19-pendente-ondulado.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/20-balao-japones.webp" srcset="assets/pecas-sm/20-balao-japones.webp 400w, assets/pecas-web/20-balao-japones.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/pecas-web/21-coluna-facetada.webp" srcset="assets/pecas-sm/21-coluna-facetada.webp 400w, assets/pecas-web/21-coluna-facetada.webp 800w" sizes="(max-width:600px) 240px, 312px" alt="" width="800" height="800" loading="lazy"></figure>
     </div>
 
-    </div><!-- /palco -->
-
-    <div class="carrossel-nav">
-      <div class="bolinhas" id="bolinhas"></div>
+    <div class="centro" style="margin-top:44px">
+      <button class="btn ir-oferta">VER A OFERTA COMPLETA</button>
     </div>
   </div>
 </section>
 
-<!-- 4. O QUE VOCÊ RECEBE -->
-<section>
-  <div class="wrap">
-    <h2 class="tit">Tudo que você vai receber</h2>
-    <p class="subtit">Os 50 moldes divididos em 14 estilos, prontos pra imprimir na impressora comum de casa</p>
+<!-- ============ DESEJO · para que serve ============ -->
+<section class="desejo">
+  <div class="wrap centro">
+    <span class="pill">O melhor da história</span>
+    <h2 style="margin:16px 0 12px">Imagine ouvir <span class="script cr">"onde você comprou?"</span></h2>
+    <p class="sub">E poder responder: <b>fui eu que fiz</b>. Esse é o momento que faz valer cada dobra.</p>
 
-    <div class="grid">
+    <div class="usos">
+      <div class="uso">
+        <span class="u-ico">🏠</span>
+        <b>Para decorar</b>
+        <span>Uma peça que ninguém mais tem, no tamanho e na cor exatos do canto que você quer iluminar.</span>
+      </div>
+      <div class="uso">
+        <span class="u-ico">🎁</span>
+        <b>Para presentear</b>
+        <span>Presente feito à mão vale por dez comprados — e ninguém esquece quem deu.</span>
+      </div>
+      <div class="uso">
+        <span class="u-ico">💰</span>
+        <b>Para vender</b>
+        <span>Luminária de papel tem saída o ano inteiro e o material custa centavos por peça.</span>
+      </div>
+      <div class="uso">
+        <span class="u-ico">🌙</span>
+        <b>Para relaxar</b>
+        <span>Uma hora dobrando e a cabeça desliga. Muita gente começa por isso e não larga mais.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OS 14 ESTILOS ============ -->
+<section class="receber">
+  <div class="wrap centro">
+    <span class="pill">O que você recebe</span>
+    <h2 style="margin:16px 0 12px">Os 50 moldes em <span class="script cr">14 estilos diferentes</span></h2>
+    <p class="sub">Prontos para imprimir na impressora comum de casa, em folha A4, com todas as linhas já desenhadas.</p>
+
+    <div class="estilos">
       <!-- os 14 tipos e a contagem de modelos vem direto do catalogo do entregavel -->
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M3.5 16c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5z"/><path d="M12 7.5V16M7.7 8.9 9 16m6.3-7.1L14 16"/><path d="M2.5 16h19"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M3.5 16c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5z"/><path d="M12 7.5V16M7.7 8.9 9 16m6.3-7.1L14 16"/><path d="M2.5 16h19"/></svg>
         <span class="qtd">5 modelos</span>
         <b>Cúpula Sanfona</b><span class="d">A malha de losangos que se fecha como sanfona — a cúpula de pregas que todo mundo reconhece</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M6.5 5h11l1.8 14H4.7z"/><path d="M5.2 9h13.6M5.5 12.5h13m-12.8 3.5h12.6"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M6.5 5h11l1.8 14H4.7z"/><path d="M5.2 9h13.6M5.5 12.5h13m-12.8 3.5h12.6"/></svg>
         <span class="qtd">3 modelos</span>
         <b>Cúpula Fole</b><span class="d">Abre e fecha como um fole e fica em pé sozinha, sem armação por dentro</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M9 5.5h6l5 12.5H4z"/><path d="M11.2 5.5 8.4 18M12.8 5.5 15.6 18M12 5.5V18"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M9 5.5h6l5 12.5H4z"/><path d="M11.2 5.5 8.4 18M12.8 5.5 15.6 18M12 5.5V18"/></svg>
         <span class="qtd">5 modelos</span>
         <b>Chapéu Plissado</b><span class="d">O caminho mais rápido para uma cúpula bonita: uma folha só, pregas em leque</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><ellipse cx="12" cy="12" rx="3.4" ry="8.5"/><path d="M12 3.5v17"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><ellipse cx="12" cy="12" rx="3.4" ry="8.5"/><path d="M12 3.5v17"/></svg>
         <span class="qtd">5 modelos</span>
         <b>Balão Japonês</b><span class="d">Pétalas coladas lado a lado que fecham numa bola — a luminária de festa japonesa</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M5.5 6.5h13v12h-13z"/><ellipse cx="12" cy="6.5" rx="6.5" ry="2"/><path d="M8.6 10.4v4.4M12 10.4v4.4m3.4-4.4v4.4"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M5.5 6.5h13v12h-13z"/><ellipse cx="12" cy="6.5" rx="6.5" ry="2"/><path d="M8.6 10.4v4.4M12 10.4v4.4m3.4-4.4v4.4"/></svg>
         <span class="qtd">4 modelos</span>
         <b>Cilindro Vazado</b><span class="d">Cortes que se abrem quando o papel curva. Acesa, ela desenha a luz na parede</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m12 5.2 3.4 3.4L12 12 8.6 8.6zM12 12l3.4 3.4L12 18.8 8.6 15.4z"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m12 5.2 3.4 3.4L12 12 8.6 8.6zM12 12l3.4 3.4L12 18.8 8.6 15.4z"/></svg>
         <span class="qtd">3 modelos</span>
         <b>Bola Mágica</b><span class="d">A malha colapsa e vira uma bola texturizada. A mais trabalhosa e a que mais impressiona</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 20 9.2 17 20.2H7L4 9.2z"/><path d="M4 9.2h16M12 3v17.2"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M12 3 20 9.2 17 20.2H7L4 9.2z"/><path d="M4 9.2h16M12 3v17.2"/></svg>
         <span class="qtd">5 modelos</span>
         <b>Geométrica Facetada</b><span class="d">Faces planas coladas por abas. Sem dobra difícil: recortar, dobrar reto, colar</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M10.4 3.5v6.8H3.5v3.4h6.9v6.8"/><path d="M13.6 20.5v-6.8h6.9v-3.4h-6.9V3.5"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M10.4 3.5v6.8H3.5v3.4h6.9v6.8"/><path d="M13.6 20.5v-6.8h6.9v-3.4h-6.9V3.5"/></svg>
         <span class="qtd">4 modelos</span>
         <b>Encaixe sem Cola</b><span class="d">Peças pequenas que se encaixam umas nas outras. Não usa uma gota de cola</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M8 4c4 2.7 4 5.3 0 8s-4 5.3 0 8"/><path d="M16 4c-4 2.7-4 5.3 0 8s4 5.3 0 8"/><path d="M8 4h8M8 20h8"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M8 4c4 2.7 4 5.3 0 8s-4 5.3 0 8"/><path d="M16 4c-4 2.7-4 5.3 0 8s4 5.3 0 8"/><path d="M8 4h8M8 20h8"/></svg>
         <span class="qtd">3 modelos</span>
         <b>Espiral Torcida</b><span class="d">As pregas torcem do centro para a borda e a peça inteira gira, feito um redemoinho</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 4.3c2.4 0 4 2 4 4.2S14.4 12.8 12 12.8s-4-2-4-4.3S9.6 4.3 12 4.3z"/><path d="M4.4 13.4c1.9-1.4 4.4-2 7.6-2s5.7.6 7.6 2"/><path d="M3 18.2c2.4-1.7 5.4-2.5 9-2.5s6.6.8 9 2.5"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M12 4.3c2.4 0 4 2 4 4.2S14.4 12.8 12 12.8s-4-2-4-4.3S9.6 4.3 12 4.3z"/><path d="M4.4 13.4c1.9-1.4 4.4-2 7.6-2s5.7.6 7.6 2"/><path d="M3 18.2c2.4-1.7 5.4-2.5 9-2.5s6.6.8 9 2.5"/></svg>
         <span class="qtd">3 modelos</span>
         <b>Lótus de Escamas</b><span class="d">Escamas soltas coladas em camadas, como telhado. Cada fileira cobre a de baixo</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3.2 14.6 9l6.3.6-4.8 4.2 1.5 6.2L12 16.7l-5.6 3.3 1.5-6.2L3.1 9.6 9.4 9z"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M12 3.2 14.6 9l6.3.6-4.8 4.2 1.5 6.2L12 16.7l-5.6 3.3 1.5-6.2L3.1 9.6 9.4 9z"/></svg>
         <span class="qtd">3 modelos</span>
         <b>Estrela Pontuda</b><span class="d">A borda vira zigue-zague e a peça acende como uma estrela</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M6 6h12v13H6z"/><rect x="9.4" y="9.6" width="5.2" height="6" rx=".6"/><path d="M4.5 6h15M4.5 19h15"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M6 6h12v13H6z"/><rect x="9.4" y="9.6" width="5.2" height="6" rx=".6"/><path d="M4.5 6h15M4.5 19h15"/></svg>
         <span class="qtd">3 modelos</span>
         <b>Lanterna Vazada</b><span class="d">Painéis retos com janela recortada. Fecha em prisma e a luz sai pelas aberturas</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3.2c5 4.3 7 8.1 7 11.4 0 3.3-3.1 5.9-7 5.9s-7-2.6-7-5.9c0-3.3 2-7.1 7-11.4z"/><path d="M5.4 13.2h13.2"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M12 3.2c5 4.3 7 8.1 7 11.4 0 3.3-3.1 5.9-7 5.9s-7-2.6-7-5.9c0-3.3 2-7.1 7-11.4z"/><path d="M5.4 13.2h13.2"/></svg>
         <span class="qtd">2 modelos</span>
         <b>Ogiva Curva</b><span class="d">A malha muda de largura linha a linha, e isso curva a silhueta em barriga</span>
       </div>
-      <div class="card">
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 12.4a1.9 1.9 0 1 1 1.9 1.9 3.6 3.6 0 0 1-3.6-3.6 5.3 5.3 0 0 1 5.3-5.3 7 7 0 0 1 7 7c0 3.9-3.1 7-7 7H9"/></svg></span>
+      <div class="estilo">
+        <svg viewBox="0 0 24 24"><path d="M12 12.4a1.9 1.9 0 1 1 1.9 1.9 3.6 3.6 0 0 1-3.6-3.6 5.3 5.3 0 0 1 5.3-5.3 7 7 0 0 1 7 7c0 3.9-3.1 7-7 7H9"/></svg>
         <span class="qtd">2 modelos</span>
         <b>Espiral Cortada</b><span class="d">Um corte só, em espiral. Solta e vira cortina redonda. A mais fácil da coleção</span>
       </div>
@@ -452,422 +752,515 @@ footer{background:var(--escuro);color:#D3A88C;text-align:center;padding:30px 20p
       </ul>
     </div>
 
-    <div style="margin-top:24px"><a class="cta js-planos">Acessar agora e montar hoje</a></div>
-  </div>
-</section>
-
-<!-- 5. PROVA SOCIAL -->
-<section class="prova">
-  <div class="wrap">
-    <h2 class="tit">Quem já testou</h2>
-    <p class="subtit">Mensagens que chegaram no nosso WhatsApp — arraste para ler</p>
-
-    <div class="palco-prints">
-    <button class="seta seta-e" id="pSetaE" onclick="moverPrint(-1)" aria-label="Depoimento anterior">‹</button>
-    <button class="seta seta-d" id="pSetaD" onclick="moverPrint(1)" aria-label="Próximo depoimento">›</button>
-    <div class="prints" id="prints">
-      <div class="print"><img src="assets/depoimentos/dep-1-beatriz.webp" width="720" height="1366" loading="lazy" alt="Conversa de WhatsApp: cliente conta que além de decorar o apartamento conseguiu transformar as luminárias numa fonte de renda, e que a lista de fornecedores ajudou a fechar uma remessa de material barata"></div>
-      <div class="print"><img src="assets/depoimentos/dep-2-sthefany.webp" width="720" height="1366" loading="lazy" alt="Conversa de WhatsApp: cliente mostra foto de uma luminária em espiral e conta que o marido levou a peça para o escritório e o pessoal de lá já quis encomendar"></div>
-      <div class="print"><img src="assets/depoimentos/dep-3-alessandra.webp" width="720" height="1366" loading="lazy" alt="Conversa de WhatsApp: cliente mostra foto de uma luminária geométrica em formato de gato que fez de presente para a mãe"></div>
-      <div class="print"><img src="assets/depoimentos/dep-4-cristiane.webp" width="720" height="1366" loading="lazy" alt="Conversa de WhatsApp: cliente mostra foto de luminárias acesas na área da piscina e conta que as amigas já estão pensando em comprar dela"></div>
-      <div class="print"><img src="assets/depoimentos/dep-5-daniela.webp" width="720" height="1366" loading="lazy" alt="Conversa de WhatsApp: cliente mostra foto de uma luminária esférica plissada e conta que o marido jurava que a peça tinha custado quase R$300 numa loja"></div>
+    <div class="centro" style="margin-top:38px">
+      <button class="btn ir-oferta">ACESSAR AGORA E MONTAR HOJE</button>
     </div>
-    </div><!-- /palco-prints -->
-
-    <div class="pontos" id="pontosPrints"></div>
   </div>
 </section>
 
-<!-- 6. BÔNUS -->
+<!-- ============ QUANTO VALE · prova de mercado ============ -->
+<!-- Os precos abaixo sao REAIS, capturados na Shopee e no Mercado Livre em 04 e
+     05/09/2026. Se forem atualizados um dia, trocar tambem a data na nota ao pe
+     da secao — numero de mercado sem data envelhece. -->
+<section class="vale">
+  <div class="wrap centro">
+    <span class="pill mostarda">Quanto vale a peça pronta</span>
+    <h2 style="margin:16px 0 12px">O papel custa centavos. <span class="script cr">A luminária pronta, não.</span></h2>
+    <p class="sub">Uma peça inteira sai por menos de R$ 10 de material. Veja o que se cobra hoje por luminárias como as desta coleção — e quantas pessoas já compraram.</p>
+
+    <div class="conta">
+      <div class="lado custo">
+        <span class="rotulo">O que você gasta</span>
+        <div class="valor">R$ 6<small>por peça</small></div>
+        <ul>
+          <li>≈ 4 folhas A4 de 120 a 180 g</li>
+          <li>cola bastão e fita dupla face</li>
+          <li>o soquete com LED de luz fria</li>
+        </ul>
+      </div>
+      <div class="seta">→</div>
+      <div class="lado venda">
+        <span class="rotulo">O que estão cobrando</span>
+        <div class="valor">R$ 60<small>a R$ 918</small></div>
+        <ul>
+          <li>pendente disco plissado — <b>R$ 502,87</b> · 55 vendidos</li>
+          <li>lâmpada suspensa origami 40 cm — <b>R$ 114,55</b></li>
+          <li>pendente dobrável de papel — <b>R$ 108,89</b></li>
+          <li>lanterna origami dobrável — <b>R$ 87,07</b> · <b>156 vendidos</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="chamada-provas">Veja com seus próprios olhos <span class="seta-baixo">↓</span></p>
+
+    <!-- As 7 imagens aparecem duas vezes: a segunda leva serve de emenda para o
+         deslize voltar ao começo sem a pessoa perceber. Se trocar as imagens,
+         trocar nas DUAS levas. -->
+    <div class="trilho provas" id="provas">
+      <figure><img src="assets/provas/venda-01.webp" srcset="assets/provas-sm/venda-01.webp 340w, assets/provas/venda-01.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="Anúncio de lanterna pendente de origami em papel por R$ 87,07 no Pix, com 156 unidades vendidas" width="520" height="722" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/provas/venda-02.webp" srcset="assets/provas-sm/venda-02.webp 340w, assets/provas/venda-02.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="Anúncio de luminária pendente dobrável de papel branco para teto por R$ 108,89" width="520" height="722" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/provas/venda-03.webp" srcset="assets/provas-sm/venda-03.webp 340w, assets/provas/venda-03.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="Anúncio de lâmpada suspensa de origami com abajur de papel de 40 cm por R$ 114,55" width="520" height="722" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/provas/venda-04.webp" srcset="assets/provas-sm/venda-04.webp 340w, assets/provas/venda-04.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="Anúncio de lustre pendente plissado branco por R$ 918,40" width="520" height="722" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/provas/venda-05.webp" srcset="assets/provas-sm/venda-05.webp 340w, assets/provas/venda-05.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="Anúncio de luminária pendente disco plissado branco por R$ 502,87 no Pix, com 55 unidades vendidas" width="520" height="722" loading="lazy"></figure>
+      <figure><img src="assets/provas/venda-06.webp" srcset="assets/provas-sm/venda-06.webp 340w, assets/provas/venda-06.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="Anúncio de luminária pendente origami geométrico por R$ 59,99" width="520" height="722" loading="lazy"></figure>
+      <figure><img src="assets/provas/venda-07.webp" srcset="assets/provas-sm/venda-07.webp 340w, assets/provas/venda-07.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="Anúncio de abajur de mesa plissado de 26 cm por R$ 67,90, com mais de 50 unidades vendidas e nota 4,1" width="520" height="722" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/provas/venda-01.webp" srcset="assets/provas-sm/venda-01.webp 340w, assets/provas/venda-01.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="" width="520" height="722" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/provas/venda-02.webp" srcset="assets/provas-sm/venda-02.webp 340w, assets/provas/venda-02.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="" width="520" height="722" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/provas/venda-03.webp" srcset="assets/provas-sm/venda-03.webp 340w, assets/provas/venda-03.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="" width="520" height="722" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/provas/venda-04.webp" srcset="assets/provas-sm/venda-04.webp 340w, assets/provas/venda-04.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="" width="520" height="722" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/provas/venda-05.webp" srcset="assets/provas-sm/venda-05.webp 340w, assets/provas/venda-05.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="" width="520" height="722" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/provas/venda-06.webp" srcset="assets/provas-sm/venda-06.webp 340w, assets/provas/venda-06.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="" width="520" height="722" loading="lazy"></figure>
+      <figure aria-hidden="true"><img src="assets/provas/venda-07.webp" srcset="assets/provas-sm/venda-07.webp 340w, assets/provas/venda-07.webp 520w" sizes="(max-width:600px) 288px, 360px" alt="" width="520" height="722" loading="lazy"></figure>
+    </div>
+
+    <p class="nota-provas">Preços coletados na Shopee e no Mercado Livre em 4 e 5 de setembro de 2026. O que cada peça vende depende do acabamento, das fotos e da divulgação de quem vende — aqui está o que o mercado cobra hoje, não uma promessa de ganho.</p>
+
+    <div class="centro" style="margin-top:38px">
+      <button class="btn ir-oferta">QUERO APRENDER A MONTAR</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BONUS ============ -->
 <section class="bonus">
-  <div class="wrap">
-    <h2 class="tit">3 bônus exclusivos</h2>
-    <p class="subtit">Inclusos no plano Completo, sem custo adicional</p>
+  <div class="wrap centro">
+    <span class="pill mostarda">Bônus inclusos</span>
+    <h2 style="margin:16px 0 12px">4 materiais que <span class="script" style="color:#FFC79B">ninguém te conta</span></h2>
+    <p class="sub">O que separa a peça que parece caseira da que parece comprada — e o que fazer quando você quiser vender.</p>
 
-    <div class="bcard">
-      <span class="n">Bônus 1</span>
-      <picture><source srcset="assets/bonus/bonus-3.webp" type="image/webp">
-      <img class="capa" src="assets/bonus/bonus-3.jpg" alt="Guia de Como Dobrar Direito" loading="lazy" width="1000" height="563"></picture>
-      <div class="txt"><b>Guia de Como Dobrar Direito</b><span>As quatro dobras que aparecem nos 50 modelos, com o jeito certo de vincar sem rasgar nem marcar o papel.</span><span class="val">R$ 27</span></div>
-    </div>
-    <div class="bcard">
-      <span class="n">Bônus 2</span>
-      <picture><source srcset="assets/bonus/bonus-2.webp" type="image/webp">
-      <img class="capa" src="assets/bonus/bonus-2.jpg" alt="Manual da Luz em 5 Minutos" loading="lazy" width="1000" height="563"></picture>
-      <div class="txt"><b>Manual da Luz em 5 Minutos</b><span>Qual LED comprar, como fixar o soquete e a distância segura do papel. Em cinco minutos a sua peça está acesa.</span><span class="val">R$ 27</span></div>
-    </div>
-    <div class="bcard">
-      <span class="n">Bônus 3</span>
-      <picture><source srcset="assets/bonus/bonus-1.webp" type="image/webp">
-      <img class="capa" src="assets/bonus/bonus-1.jpg" alt="Tabela de Quanto Cobrar" loading="lazy" width="1000" height="563"></picture>
-      <div class="txt"><b>Tabela de Quanto Cobrar</b><span>Custo real de cada luminária, margem segura e o preço que o mercado paga em cada modelo.</span><span class="val">R$ 27</span></div>
-    </div>
-
-    <p class="btotal">R$ 81 em bônus<br><em>saem de graça adquirindo hoje</em></p>
-  </div>
-</section>
-
-<!-- 7. PRICING -->
-<section id="planos">
-  <div class="wrap">
-    <h2 class="tit">Escolha a opção ideal</h2>
-    <p class="subtit">Pagamento único. Sem mensalidade, sem renovação.</p>
-
-    <div class="plano basico">
-      <h3>Plano Básico</h3>
-      <div class="preco">
-        <span class="de">De R$ 67,00</span>
-        <span class="por"><span class="cifra">R$</span>10<span class="cent">,00</span></span>
-        <span class="par">à vista no Pix ou cartão</span>
+    <div class="bonus-lista" style="text-align:left">
+      <div class="card-bonus">
+        <div class="capa-bonus"><img src="assets/bonus/bonus-3.webp" srcset="assets/bonus-sm/bonus-3.webp 400w, assets/bonus/bonus-3.webp 1000w" sizes="(max-width:700px) 90vw, 520px" alt="Capa do bônus Guia de Como Dobrar Direito" width="1000" height="563" loading="lazy"></div>
+        <div class="txt-bonus">
+          <b>📐 BÔNUS 1 — Guia de Como Dobrar Direito</b>
+          <span>As quatro dobras que aparecem nos 50 modelos, com o jeito certo de vincar sem rasgar nem marcar o papel.</span>
+          <span class="valor"><s>R$ 27</s> grátis</span>
+        </div>
       </div>
-      <ul>
-        <li>50 moldes vetoriais completos</li>
-        <li>Acesso vitalício à área de membros</li>
-        <li>Download imediato após a compra</li>
-        <li style="opacity:.45">Sem os 3 bônus exclusivos</li>
-        <li style="opacity:.45">Sem suporte prioritário</li>
-      </ul>
-      <div class="alerta">92% das alunas escolhem o plano Completo abaixo</div>
-      <button class="cta" style="background:#8C7563" onclick="abrirPop()">Quero só os moldes</button>
-    </div>
-
-    <div class="plano dest">
-      <span class="tag">⚡ Mais vendido</span>
-      <h3>Plano Completo</h3>
-      <div class="preco">
-        <span class="de">De R$ 197,00</span>
-        <span class="por"><span class="cifra">R$</span>25<span class="cent">,90</span></span>
-        <span class="par">ou 3x de R$ 8,64 no cartão</span>
-        <span class="economiza">Você economiza R$ 171,10</span>
+      <div class="card-bonus">
+        <div class="capa-bonus"><img src="assets/bonus/bonus-2.webp" srcset="assets/bonus-sm/bonus-2.webp 400w, assets/bonus/bonus-2.webp 1000w" sizes="(max-width:700px) 90vw, 520px" alt="Capa do bônus Manual da Luz em 5 Minutos" width="1000" height="563" loading="lazy"></div>
+        <div class="txt-bonus">
+          <b>💡 BÔNUS 2 — Manual da Luz em 5 Minutos</b>
+          <span>Qual LED comprar, como fixar o soquete e a distância segura do papel. Em cinco minutos a sua peça está acesa.</span>
+          <span class="valor"><s>R$ 27</s> grátis</span>
+        </div>
       </div>
-      <ul>
-        <li>50 moldes vetoriais completos</li>
-        <li>Acesso vitalício + atualizações futuras</li>
-        <li><b>Os 3 bônus exclusivos</b> (R$ 81)</li>
-        <li>Tabela de precificação pronta</li>
-        <li>Suporte prioritário no WhatsApp</li>
-        <li>Liberdade total de venda das peças</li>
-      </ul>
-      <!-- Checkout SafePaymnt — plano Completo, R$ 25,90 -->
-      <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7U6" class="cta">Quero tudo com os bônus</a>
-      <div class="badges">
-        <span>🔒 Compra segura</span><span>♾️ Vitalício</span><span>↩️ 15 dias de garantia</span>
+      <div class="card-bonus">
+        <div class="capa-bonus"><img src="assets/bonus/bonus-1.webp" srcset="assets/bonus-sm/bonus-1.webp 400w, assets/bonus/bonus-1.webp 1000w" sizes="(max-width:700px) 90vw, 520px" alt="Capa do bônus Tabela de Quanto Cobrar" width="1000" height="563" loading="lazy"></div>
+        <div class="txt-bonus">
+          <b>💰 BÔNUS 3 — Tabela de Quanto Cobrar</b>
+          <span>Custo real de cada luminária, margem segura e o preço que o mercado paga em cada modelo.</span>
+          <span class="valor"><s>R$ 27</s> grátis</span>
+        </div>
+      </div>
+      <div class="card-bonus">
+        <div class="capa-bonus"><img src="assets/bonus/bonus-4.webp" srcset="assets/bonus-sm/bonus-4.webp 400w, assets/bonus/bonus-4.webp 760w" sizes="(max-width:700px) 90vw, 520px" alt="Capa do bônus Guia do Papel Que Funciona" width="760" height="424" loading="lazy"></div>
+        <div class="txt-bonus">
+          <b>📄 BÔNUS 4 — Guia do Papel Que Funciona</b>
+          <span>Qual gramagem usar em cada estilo, onde comprar barato e as folhas que rasgam na dobra — para não descobrir isso no meio da montagem.</span>
+          <span class="valor"><s>R$ 27</s> grátis</span>
+        </div>
+      </div>
+      <div class="card-bonus juntos">
+        <div class="txt-bonus">
+          <b>🎁 Os 4 vão juntos</b>
+          <span>Todos inclusos no plano Completo, sem custo nenhum a mais.</span>
+          <span class="valor"><s>R$ 108</s> inclusos</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 8. GARANTIA -->
+<!-- ============ DEPOIMENTOS ============ -->
+<section class="deps">
+  <div class="wrap centro">
+    <span class="pill">Quem já testou</span>
+    <h2 style="margin:16px 0 12px">O que diz <span class="script cr">quem já montou</span></h2>
+    <p class="sub">Mensagens que chegaram no nosso WhatsApp, com a foto da peça pronta.</p>
+  </div>
+
+  <div class="dep-palco" id="deps">
+    <button class="dep-seta ant" type="button" aria-label="Depoimento anterior">‹</button>
+    <div class="dep-trilho">
+      <figure class="dep-slide"><img src="assets/depoimentos/dep-1-beatriz.webp" srcset="assets/depoimentos-sm/dep-1-beatriz.webp 360w, assets/depoimentos/dep-1-beatriz.webp 720w" sizes="(max-width:600px) 290px, 395px" alt="Conversa de WhatsApp: cliente conta que além de decorar o apartamento conseguiu transformar as luminárias numa fonte de renda, e que a lista de fornecedores ajudou a fechar uma remessa de material barata" width="720" height="1366" loading="lazy" decoding="async"></figure>
+      <figure class="dep-slide"><img src="assets/depoimentos/dep-2-sthefany.webp" srcset="assets/depoimentos-sm/dep-2-sthefany.webp 360w, assets/depoimentos/dep-2-sthefany.webp 720w" sizes="(max-width:600px) 290px, 395px" alt="Conversa de WhatsApp: cliente mostra foto de uma luminária em espiral e conta que o marido levou a peça para o escritório e o pessoal de lá já quis encomendar" width="720" height="1366" loading="lazy" decoding="async"></figure>
+      <figure class="dep-slide"><img src="assets/depoimentos/dep-3-alessandra.webp" srcset="assets/depoimentos-sm/dep-3-alessandra.webp 360w, assets/depoimentos/dep-3-alessandra.webp 720w" sizes="(max-width:600px) 290px, 395px" alt="Conversa de WhatsApp: cliente mostra foto de uma luminária geométrica em formato de gato que fez de presente para a mãe" width="720" height="1366" loading="lazy"></figure>
+      <figure class="dep-slide"><img src="assets/depoimentos/dep-4-cristiane.webp" srcset="assets/depoimentos-sm/dep-4-cristiane.webp 360w, assets/depoimentos/dep-4-cristiane.webp 720w" sizes="(max-width:600px) 290px, 395px" alt="Conversa de WhatsApp: cliente mostra foto de luminárias acesas na área da piscina e conta que as amigas já estão pensando em comprar dela" width="720" height="1366" loading="lazy"></figure>
+      <figure class="dep-slide"><img src="assets/depoimentos/dep-5-daniela.webp" srcset="assets/depoimentos-sm/dep-5-daniela.webp 360w, assets/depoimentos/dep-5-daniela.webp 720w" sizes="(max-width:600px) 290px, 395px" alt="Conversa de WhatsApp: cliente mostra foto de uma luminária esférica plissada e conta que o marido jurava que a peça tinha custado quase R$ 300 numa loja" width="720" height="1366" loading="lazy"></figure>
+    </div>
+    <button class="dep-seta prox" type="button" aria-label="Próximo depoimento">›</button>
+  </div>
+  <div class="dep-dots" id="deps-dots"></div>
+</section>
+
+<!-- ============ OFERTA ============ -->
+<section class="oferta" id="oferta">
+  <div class="wrap centro">
+    <span class="pill">A oferta</span>
+    <h2 style="margin:16px 0 12px">Tudo isso, <span class="script cr">para sempre</span></h2>
+    <p class="sub">Pagamento único. Sem mensalidade, sem renovação.</p>
+
+    <div class="planos" style="text-align:left">
+      <!-- PLANO BASICO -->
+      <div class="plano">
+        <div class="plano-nome">Plano Básico</div>
+        <div class="plano-preco"><small>R$</small>10</div>
+        <p class="plano-obs">Só os moldes, sem os bônus.</p>
+        <ul class="inclui">
+          <li><span class="ckm">✓</span> Os 50 moldes vetoriais completos</li>
+          <li><span class="ckm">✓</span> Acesso vitalício à área de membros</li>
+          <li><span class="ckm">✓</span> Download imediato após a compra</li>
+          <li class="fora"><span class="ckm nao">×</span> Sem os 4 bônus exclusivos</li>
+          <li class="fora"><span class="ckm nao">×</span> Sem suporte prioritário</li>
+        </ul>
+        <!-- R$ 10 — o clique abre o popup de upsell antes de seguir para o checkout -->
+        <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7R8" class="btn full btn-simples" id="btn-basico">QUERO SÓ OS MOLDES</a>
+        <p class="microaviso">92% das alunas escolhem o plano Completo</p>
+      </div>
+
+      <!-- PLANO COMPLETO -->
+      <div class="plano destaque">
+        <span class="fita">⚡ Mais vendido</span>
+        <div class="plano-nome">Plano Completo</div>
+        <div class="linha-ancora">
+          <s>R$ 197,00</s>
+          <span class="economize">Economize R$ 171,10</span>
+        </div>
+        <div class="plano-preco"><small>R$</small>25,90</div>
+        <p class="plano-obs">Os 50 moldes + os 4 bônus, ou 3x de R$ 8,64 no cartão.</p>
+        <div class="timer">⏱ A oferta expira em: <b id="relogio">09:59</b></div>
+        <ul class="inclui">
+          <li><span class="ckm">✓</span> Os 50 moldes vetoriais completos</li>
+          <li><span class="ckm">✓</span> Acesso vitalício + atualizações futuras</li>
+          <li><span class="ckm">✓</span> Passo a passo modelo por modelo</li>
+          <li><span class="ckm">✓</span> Suporte prioritário no WhatsApp</li>
+          <li><span class="ckm">✓</span> Liberdade total de venda das peças</li>
+        </ul>
+        <hr class="divisor">
+        <div class="titulo-bonus">🎁 Bônus inclusos (R$ 108)</div>
+        <ul class="lista-bonus">
+          <li>🎁 <span><b>BÔNUS 1:</b> Guia de Como Dobrar Direito</span></li>
+          <li>🎁 <span><b>BÔNUS 2:</b> Manual da Luz em 5 Minutos</span></li>
+          <li>🎁 <span><b>BÔNUS 3:</b> Tabela de Quanto Cobrar</span></li>
+          <li>🎁 <span><b>BÔNUS 4:</b> Guia do Papel Que Funciona</span></li>
+        </ul>
+        <!-- R$ 25,90 -->
+        <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7U6" class="btn full">SIM! QUERO TUDO COM OS BÔNUS</a>
+        <div class="selos-pgto">
+          <span>🔒 Compra segura</span><span>🛡️ 15 dias de garantia</span><span>⚡ Entrega imediata</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POPUP DE UPSELL ============ -->
+<!-- Abre quando a pessoa clica no plano de R$ 10. O botão verde tem checkout
+     PRÓPRIO (R$ 17,90) — não é o link do plano Completo. -->
+<div class="modal" id="upsell" hidden>
+  <div class="modal-fundo" data-fechar></div>
+  <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="upsell-titulo">
+    <button class="modal-x" data-fechar aria-label="Fechar">×</button>
+    <h3 id="upsell-titulo">Espera — só nesta tela</h3>
+    <p class="modal-sub">Leve o pacote <b>Completo com os 4 bônus</b> por um valor que não aparece em nenhum outro lugar do site.</p>
+
+    <div class="modal-preco">
+      <s>R$ 25,90</s>
+      <div class="modal-valor"><small>R$</small>17,90</div>
+      <span>apenas R$ 7,90 a mais que o plano Básico</span>
+    </div>
+
+    <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7U5" class="btn full" id="upsell-sim">QUERO APROVEITAR AGORA</a>
+    <button class="modal-nao" id="upsell-nao">Continuar só com o Básico</button>
+  </div>
+</div>
+
+<!-- ============ GARANTIA ============ -->
 <section class="garantia">
-  <div class="wrap">
-    <div class="selo-g"><b>15</b><span>dias</span></div>
-    <h2 class="tit">Risco zero de verdade</h2>
-    <p>Você tem 15 dias inteiros pra baixar, imprimir e montar a primeira luminária. Se achar que os moldes não servem pra você, manda uma mensagem e devolvemos <b>100% do valor</b>. Sem pergunta, sem burocracia, sem precisar justificar nada.</p>
+  <div class="wrap estreito">
+    <div class="g-box">
+      <div class="selo"><b>15</b><span>dias</span></div>
+      <div>
+        <h3>Risco zero de verdade</h3>
+        <p>Você tem 15 dias inteiros para baixar, imprimir e montar a primeira luminária. Se achar que os moldes não servem para você, manda uma mensagem e devolvemos <b>100% do valor</b>. Sem pergunta, sem burocracia, sem precisar justificar nada.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- 9. FAQ -->
+<!-- ============ FAQ ============ -->
 <section class="faq">
-  <div class="wrap">
-    <h2 class="tit">Perguntas frequentes</h2>
-    <p class="subtit">&nbsp;</p>
+  <div class="wrap centro">
+    <span class="pill turq">Dúvidas</span>
+    <h2 style="margin:16px 0 12px">Perguntas que <span class="script tq">sempre chegam</span></h2>
 
-    <details open><summary>Preciso saber origami?</summary><p>Não. Todas as linhas já vêm desenhadas na folha: preta cheia é onde cortar, vermelha tracejada é dobra para trás, azul tracejada é dobra para frente e cinza é a aba de cola. Você segue a linha, não o instinto.</p></details>
-    <details><summary>Que papel eu uso?</summary><p>Papel comum de 120 a 180 g funciona na maioria dos modelos — é o que dá corpo sem quebrar na dobra. O guia indica a gramagem ideal de cada estilo, e vários modelos saem bem até em sulfite comum.</p></details>
-    <details><summary>Que lâmpada posso usar? É seguro?</summary><p>Use apenas LED de luz fria de até 9 W, com quatro dedos de distância do papel. LED frio praticamente não esquenta. Lâmpadas incandescentes ou halógenas estão fora — o Manual da Luz explica a montagem segura passo a passo.</p></details>
-    <details><summary>Como eu recebo o material?</summary><p>É 100% digital. Assim que o pagamento é confirmado, você recebe o acesso à área de membros por e-mail e já pode baixar os moldes em alta qualidade e imprimir na sua impressora comum.</p></details>
-    <details><summary>Preciso de impressora especial?</summary><p>Não. Qualquer impressora doméstica em folha A4 dá conta. Imprima em escala 100%, sem "ajustar à página", e confira a barrinha do alto da folha: ela tem que medir 50 mm. Se preferir, dá pra levar o arquivo numa papelaria e imprimir por centavos.</p></details>
-    <details><summary>Posso vender as luminárias que eu fizer?</summary><p>Pode, sem limite. Você tem liberdade total para produzir e comercializar as peças montadas. O que não é permitido é revender os arquivos digitais.</p></details>
-    <details><summary>Qual a diferença entre os dois planos?</summary><p>No Básico você leva os 50 moldes. No Completo você leva os mesmos 50 moldes mais os 3 bônus — guia de dobras, manual da luz e tabela de quanto cobrar — além do suporte prioritário.</p></details>
-    <details><summary>E se eu não gostar?</summary><p>Você tem 15 dias de garantia incondicional. Manda uma mensagem e devolvemos o valor integral. O risco é todo nosso.</p></details>
-    <details><summary>O acesso expira?</summary><p>Nunca. É pagamento único e acesso vitalício, incluindo as atualizações que forem lançadas no acervo.</p></details>
+    <div class="lista-faq" style="text-align:left">
+      <details open>
+        <summary>Preciso saber origami?</summary>
+        <p>Não. Todas as linhas já vêm desenhadas na folha: preta cheia é onde cortar, vermelha tracejada é dobra para trás, azul tracejada é dobra para frente e cinza é a aba de cola. Você segue a linha, não o instinto.</p>
+      </details>
+      <details>
+        <summary>Que papel eu uso?</summary>
+        <p>Papel comum de 120 a 180 g funciona na maioria dos modelos — é o que dá corpo sem quebrar na dobra. O guia indica a gramagem ideal de cada estilo, e vários modelos saem bem até em sulfite comum.</p>
+      </details>
+      <details>
+        <summary>Que lâmpada posso usar? É seguro?</summary>
+        <p>Use apenas LED de luz fria de até 9 W, com quatro dedos de distância do papel. LED frio praticamente não esquenta. Lâmpadas incandescentes ou halógenas estão fora — o Manual da Luz explica a montagem segura passo a passo.</p>
+      </details>
+      <details>
+        <summary>Como eu recebo o material?</summary>
+        <p>É 100% digital. Assim que o pagamento é confirmado, você recebe o acesso à área de membros por e-mail e já pode baixar os moldes em alta qualidade e imprimir na sua impressora comum.</p>
+      </details>
+      <details>
+        <summary>Preciso de impressora especial?</summary>
+        <p>Não. Qualquer impressora doméstica em folha A4 dá conta. Imprima em escala 100%, sem "ajustar à página", e confira a barrinha do alto da folha: ela tem que medir 50 mm. Se preferir, dá pra levar o arquivo numa papelaria e imprimir por centavos.</p>
+      </details>
+      <details>
+        <summary>Posso vender as luminárias que eu fizer?</summary>
+        <p>Pode, sem limite. Você tem liberdade total para produzir e comercializar as peças montadas. O que não é permitido é revender os arquivos digitais.</p>
+      </details>
+      <details>
+        <summary>Qual a diferença entre os dois planos?</summary>
+        <p>No Básico você leva os 50 moldes. No Completo você leva os mesmos 50 moldes mais os 4 bônus — guia de dobras, manual da luz, tabela de quanto cobrar e guia do papel — além do suporte prioritário.</p>
+      </details>
+      <details>
+        <summary>E se eu não gostar?</summary>
+        <p>Você tem 15 dias de garantia incondicional. Manda uma mensagem e devolvemos o valor integral. O risco é todo nosso.</p>
+      </details>
+      <details>
+        <summary>O acesso expira?</summary>
+        <p>Nunca. É pagamento único e acesso vitalício, incluindo as atualizações que forem lançadas no acervo.</p>
+      </details>
+    </div>
   </div>
 </section>
 
-<!-- 10. CTA FINAL -->
+<!-- ============ FINAL ============ -->
 <section class="final">
   <div class="wrap">
-    <h2>Amanhã esse preço não existe mais</h2>
-    <p>O valor promocional é válido apenas enquanto a promoção do topo estiver rodando.</p>
-    <!-- Checkout SafePaymnt — plano Completo, R$ 25,90 -->
-    <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7U6" class="cta">Garantir meus 50 moldes</a>
-    <p class="ancora-perda">R$ 25,90 hoje — ou mais um mês inteiro olhando luminária bonita na internet sem saber montar.</p>
+    <h2>50 moldes esperando <span class="script" style="color:#FFC79B">a sua primeira peça</span></h2>
+    <p class="sub">A primeira pode estar acesa ainda hoje à noite. E o próximo elogio que você ouvir vai ter uma resposta nova: fui eu que fiz.</p>
+
+    <div class="caixa-final">
+      <div class="de-final"><s>De R$ 197,00</s></div>
+      <div class="preco-final"><small>R$</small>25,90</div>
+      <div class="de-final">pagamento único · acesso vitalício</div>
+      <button class="btn full ir-oferta">GARANTIR MEUS 50 MOLDES</button>
+      <div class="selos-pgto" style="color:#C09A7E">
+        <span>🔒 Compra segura</span><span>🛡️ 15 dias de garantia</span><span>⚡ Entrega imediata</span>
+      </div>
+    </div>
+
+    <p class="assinatura">R$ 25,90 hoje — ou mais um mês inteiro olhando luminária bonita na internet sem saber montar.</p>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
-    <p><b>50 Moldes de Luminárias de Origami</b></p>
-    <p style="margin-top:8px">Produto 100% digital. Pagamento processado com segurança.<br>
-    Todos os direitos reservados nos termos da Lei nº 9.610/98.</p>
-    <p style="margin-top:8px">Contato: [seu e-mail de suporte]</p>
-  </div>
+  <b>50 Moldes de Luminárias de Origami</b><br>
+  Produto 100% digital, de uso pessoal. A reprodução ou revenda dos arquivos não é autorizada.<br>
+  Todos os direitos reservados nos termos da Lei nº 9.610/98.<br>
+  Contato: <a href="mailto:[seu e-mail de suporte]">[seu e-mail de suporte]</a>
 </footer>
 
-<!-- 12. POPUP DOWNSELL -->
-<div id="pop" role="dialog" aria-modal="true" aria-labelledby="poptit">
-  <div class="popbox">
-    <button class="x" onclick="fecharPop()" aria-label="Fechar">×</button>
-    <h3 id="poptit">Espera — só nesta tela</h3>
-    <p>Leve o pacote <b>Completo com os 3 bônus</b> por um valor que não aparece em nenhum outro lugar do site.</p>
-    <div class="dif">
-      <span style="text-decoration:line-through;color:#B5A395;font-size:.85rem">R$ 25,90</span>
-      <b>R$ 17,90</b>
-      <span>apenas R$ 7,90 a mais que o plano Básico</span>
-    </div>
-    <!-- Checkout SafePaymnt — upsell do popup, R$ 17,90 -->
-    <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7U5" class="cta">Quero aproveitar agora</a>
-    <!-- Checkout SafePaymnt — plano Básico, R$ 10,00 -->
-    <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7R8" class="naovaler">Continuar só com o Básico</a>
-  </div>
-</div>
-
 <script>
-// Rolagem até os planos sem sujar a URL (não adiciona #planos)
-(function(){
-  var alvo = document.getElementById('planos');
-  document.querySelectorAll('.js-planos').forEach(function(a){
-    a.style.cursor = 'pointer';
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-})();
+  // Data de hoje na faixa — sempre atualizada, sem depender do locale do aparelho
+  (function () {
+    var MESES = ['janeiro','fevereiro','março','abril','maio','junho',
+                 'julho','agosto','setembro','outubro','novembro','dezembro'];
+    var el = document.getElementById('dataHoje');
+    if (!el) return;
 
-// Data de hoje na faixa — sempre atualizada, sem depender do locale do aparelho
-(function(){
-  var MESES = ['janeiro','fevereiro','março','abril','maio','junho',
-               'julho','agosto','setembro','outubro','novembro','dezembro'];
-  var el = document.getElementById('dataHoje');
-
-  function escrever(){
-    var d = new Date();
-    el.textContent = d.getDate() + ' de ' + MESES[d.getMonth()];
-    return d;
-  }
-
-  var hoje = escrever();
-
-  // reescreve à meia-noite (aba aberta virando o dia) e ao voltar para a aba
-  var meiaNoite = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + 1, 0, 0, 2) - hoje;
-  setTimeout(function(){ escrever(); setInterval(escrever, 86400000); }, meiaNoite);
-  document.addEventListener('visibilitychange', function(){ if (!document.hidden) escrever(); });
-})();
-
-// Carrossel infinito com deslize automático lento
-(function(){
-  var trilho = document.getElementById('trilho'),
-      caixa  = document.getElementById('bolinhas'),
-      originais = Array.prototype.slice.call(trilho.querySelectorAll('.slide')),
-      TOTAL  = originais.length,
-      JANELA = 7,     // bolinhas visíveis
-      PITCH  = 13,    // 7px da bolinha + 6px de gap
-      VEL    = 0.28,  // px por frame (~17px/s) — deslize bem lento
-      GAP    = 14;
-
-  // clona o conjunto para o último ficar colado no primeiro
-  originais.forEach(function(s){
-    var c = s.cloneNode(true);
-    c.setAttribute('aria-hidden', 'true');
-    trilho.appendChild(c);
-  });
-
-  var pos = 0, ciclo = 0, pausa = 0, alvo = null, animando = false;
-  function passo(){ return originais[0].offsetWidth + GAP; }
-  function medir(){ ciclo = passo() * TOTAL; }
-
-  // bolinhas (uma por peça real)
-  var strip = document.createElement('div');
-  strip.className = 'strip';
-  for (var i = 0; i < TOTAL; i++) {
-    var b = document.createElement('button');
-    b.className = 'bolinha';
-    b.setAttribute('aria-label', 'Ir para luminária ' + (i + 1));
-    b.onclick = (function(n){ return function(){ irPara(n); }; })(i);
-    strip.appendChild(b);
-  }
-  caixa.appendChild(strip);
-  var pontos = strip.querySelectorAll('.bolinha');
-
-  function indiceAtual(){
-    return ((Math.round(pos / passo()) % TOTAL) + TOTAL) % TOTAL;
-  }
-
-  function pintar(){
-    var atual = indiceAtual();
-    var ini = Math.max(0, Math.min(atual - Math.floor(JANELA / 2), TOTAL - JANELA));
-    strip.style.transform = 'translateX(' + (-ini * PITCH) + 'px)';
-    pontos.forEach(function(p, i){
-      p.classList.toggle('on', i === atual);
-      var naBorda = (i === ini && ini > 0) || (i === ini + JANELA - 1 && ini + JANELA < TOTAL);
-      p.classList.toggle('borda', naBorda && i !== atual);
-    });
-  }
-
-  // move para um slide específico com easing, depois volta a deslizar sozinho
-  function animarAte(destino){
-    alvo = destino; animando = true; pausa = Date.now() + 3000;
-  }
-  function irPara(n){
-    var atual = indiceAtual();
-    var delta = n - atual;
-    if (delta >  TOTAL / 2) delta -= TOTAL;   // pega o caminho mais curto
-    if (delta < -TOTAL / 2) delta += TOTAL;
-    animarAte(pos + delta * passo());
-  }
-  window.mover = function(d){ animarAte(Math.round(pos / passo()) * passo() + d * passo()); };
-
-  var reduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function frame(){
-    if (!ciclo) medir();
-
-    if (animando && alvo !== null) {
-      pos += (alvo - pos) * 0.14;                    // easing suave
-      if (Math.abs(alvo - pos) < 0.5) { pos = alvo; animando = false; alvo = null; }
-    } else if (!reduzido && Date.now() > pausa) {
-      pos += VEL;                                     // deslize automático (não para no hover)
+    function escrever() {
+      var d = new Date();
+      el.textContent = d.getDate() + ' de ' + MESES[d.getMonth()];
+      return d;
     }
 
-    // salto invisível: ao passar de um ciclo, volta ao equivalente do anterior
-    if (pos >= ciclo) { pos -= ciclo; if (alvo !== null) alvo -= ciclo; }
-    if (pos < 0)      { pos += ciclo; if (alvo !== null) alvo += ciclo; }
+    var hoje = escrever();
 
-    trilho.scrollLeft = pos;
-    pintar();
-    requestAnimationFrame(frame);
-  }
+    // reescreve à meia-noite (aba aberta virando o dia) e ao voltar para a aba
+    var meiaNoite = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + 1, 0, 0, 2) - hoje;
+    setTimeout(function () { escrever(); setInterval(escrever, 86400000); }, meiaNoite);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) escrever(); });
+  })();
 
-  // interação manual pausa o automático
-  ['pointerdown','touchstart','wheel'].forEach(function(ev){
-    trilho.addEventListener(ev, function(){ pausa = Date.now() + 3000; animando = false; alvo = null; }, { passive: true });
-  });
-  trilho.addEventListener('scroll', function(){
-    if (Math.abs(trilho.scrollLeft - pos) > 2) { pos = trilho.scrollLeft; pausa = Date.now() + 3000; }
-  }, { passive: true });
+  // Carrosséis que deslizam sozinhos para a esquerda e continuam arrastáveis.
+  // Nao da para usar animacao CSS aqui — ela brigaria com o scroll nativo e mataria
+  // o arraste. Entao andamos o scrollLeft a cada quadro e saimos da frente assim que
+  // a pessoa encosta, voltando sozinho quando ela solta.
+  (function () {
+    // quem prefere menos movimento nao recebe animacao nenhuma
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  window.addEventListener('resize', medir);
-  medir();
-  requestAnimationFrame(frame);
-})();
+    function deslizar(id) {
+      var trilho = document.getElementById(id);
+      if (!trilho) return;
 
-// Carrossel de depoimentos: infinito, com avanco automatico e pausa entre um
-// print e outro. A rolagem continua nativa (scroll-snap), entao o arrasto no
-// celular mantem a fisica do sistema — o JS so move, pinta e faz o loop.
-(function(){
-  var trilho = document.getElementById('prints');
-  if (!trilho) return;
+      var VELOCIDADE = 0.45;   // px por quadro (~27px/s a 60fps)
+      var arrastando = false;  // so para enquanto o dedo/mouse esta pressionado
+      var acumulado = 0;
 
-  var originais = Array.prototype.slice.call(trilho.children),
-      N = originais.length,
-      caixa = document.getElementById('pontosPrints'),
-      DWELL = 4500,   // tempo parado em cada print
-      RETOMA = 9000;  // silencio apos interacao antes de voltar a girar
+      // metade do conteudo: a segunda leva de imagens e so a emenda do loop
+      function meio() { return trilho.scrollWidth / 2; }
 
-  // Tres conjuntos: [copia][real][copia]. Comecando no primeiro real, ele nasce
-  // centrado com o ultimo a esquerda e o segundo a direita — e ha sempre vizinho
-  // dos dois lados, entao o loop nunca mostra borda vazia.
-  function copia(){
-    var frag = document.createDocumentFragment();
-    originais.forEach(function(el){
-      var c = el.cloneNode(true);
-      c.setAttribute('aria-hidden', 'true');
-      var img = c.querySelector('img');
-      if (img) img.alt = '';
-      frag.appendChild(c);
+      function quadro() {
+        if (!arrastando) {
+          acumulado += VELOCIDADE;
+          // scrollLeft so aceita inteiro na maioria dos navegadores; acumulamos a
+          // fracao para nao perder velocidade no arredondamento
+          if (acumulado >= 1) {
+            var passo = Math.floor(acumulado);
+            acumulado -= passo;
+            trilho.scrollLeft += passo;
+          }
+          // emenda invisivel: ao passar da primeira leva, volta o equivalente
+          if (trilho.scrollLeft >= meio()) trilho.scrollLeft -= meio();
+        }
+        requestAnimationFrame(quadro);
+      }
+
+      // Passar o mouse por cima NAO para o deslize — so o arrasto de verdade para,
+      // e assim que o dedo solta ele volta sozinho, sem espera.
+      ['pointerdown', 'touchstart'].forEach(function (ev) {
+        trilho.addEventListener(ev, function () { arrastando = true; }, { passive: true });
+      });
+      ['pointerup', 'pointercancel', 'touchend', 'touchcancel', 'mouseleave'].forEach(function (ev) {
+        trilho.addEventListener(ev, function () { arrastando = false; }, { passive: true });
+      });
+      // solta fora do carrossel (o dedo saiu da area antes de levantar)
+      window.addEventListener('pointerup', function () { arrastando = false; }, { passive: true });
+
+      requestAnimationFrame(quadro);
+    }
+
+    deslizar('modelos');   // carrossel das luminárias montadas
+    deslizar('provas');    // carrossel dos anúncios
+  })();
+
+  // Carrossel de depoimentos em leque. Diferente dos outros dois: aqui não é
+  // scroll contínuo — ele anda de um em um e PARA em cada depoimento, porque a
+  // pessoa precisa de tempo para ler a conversa.
+  (function () {
+    var palco = document.getElementById('deps');
+    var dots = document.getElementById('deps-dots');
+    if (!palco) return;
+
+    var slides = [].slice.call(palco.querySelectorAll('.dep-slide'));
+    var total = slides.length;
+    if (!total) return;
+
+    var PARADA = 4200;   // ms parado em cada depoimento
+    var atual = 0;
+    var timer = null;
+
+    // botõezinhos de navegação, um por depoimento
+    var bolinhas = slides.map(function (_, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Ver depoimento ' + (i + 1));
+      b.addEventListener('click', function () { mostrar(i); reiniciar(); });
+      if (dots) dots.appendChild(b);
+      return b;
     });
-    return frag;
-  }
-  trilho.appendChild(copia());
-  trilho.insertBefore(copia(), trilho.firstChild);
 
-  var cards = Array.prototype.slice.call(trilho.children),
-      idx = N,
-      pausa = 0;
+    function mostrar(n) {
+      atual = (n + total) % total;
+      slides.forEach(function (s, i) {
+        // distância circular: -1 é o de trás, +1 o da frente
+        var d = (i - atual + total) % total;
+        s.className = 'dep-slide' + (d === 0 ? ' centro' : d === 1 ? ' dir' : d === total - 1 ? ' esq' : '');
+      });
+      bolinhas.forEach(function (b, i) {
+        b.setAttribute('aria-current', i === atual ? 'true' : 'false');
+      });
+    }
 
-  originais.forEach(function(_, i){
-    var b = document.createElement('button');
-    b.className = 'ponto';
-    b.setAttribute('aria-label', 'Ir para o depoimento ' + (i + 1));
-    b.onclick = function(){ pausa = Date.now() + RETOMA; ir(N + i, true); };
-    caixa.appendChild(b);
-  });
-  var pontos = Array.prototype.slice.call(caixa.children);
+    function anda() { mostrar(atual + 1); }
+    function reiniciar() {
+      clearInterval(timer);
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        timer = setInterval(anda, PARADA);
+      }
+    }
 
-  // Posicao medida pelo offsetLeft real: com scroll-snap-align:center o passo
-  // nao e uniforme nas bordas, entao multiplicar por largura fixa dessincroniza.
-  function centro(i){
-    var el = cards[i];
-    return el.offsetLeft - (trilho.clientWidth - el.offsetWidth) / 2;
-  }
+    palco.querySelector('.dep-seta.ant').addEventListener('click', function () { mostrar(atual - 1); reiniciar(); });
+    palco.querySelector('.dep-seta.prox').addEventListener('click', function () { mostrar(atual + 1); reiniciar(); });
 
-  function maisProximo(){
-    var meio = trilho.scrollLeft + trilho.clientWidth / 2, alvo = idx, menor = Infinity;
-    cards.forEach(function(el, i){
-      var d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - meio);
-      if (d < menor) { menor = d; alvo = i; }
+    // arrastar com o dedo troca de depoimento
+    var x0 = null;
+    palco.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    palco.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) { mostrar(atual + (dx < 0 ? 1 : -1)); reiniciar(); }
+      x0 = null;
+    }, { passive: true });
+
+    mostrar(0);   // começa com o primeiro no centro, o segundo à direita e o último à esquerda
+    reiniciar();
+  })();
+
+  // Popup de upsell: quem clica no plano de R$ 10 vê a oferta do Completo antes
+  // de seguir. Quem recusa vai para o checkout do básico, como pediu.
+  (function () {
+    var modal = document.getElementById('upsell');
+    var abre = document.getElementById('btn-basico');
+    var nao = document.getElementById('upsell-nao');
+    if (!modal || !abre) return;
+
+    var destinoBasico = abre.getAttribute('href');
+    var ultimoFoco = null;
+
+    function abrir(e) {
+      e.preventDefault();
+      // O botão do Básico é um link de checkout, então o handler global já
+      // marcou "indo para o checkout" — mas aqui ele só abre o popup. Desmarcamos,
+      // senão o back redirect fica desarmado para quem viu o popup e desistiu.
+      window.__indoParaCheckout = false;
+      ultimoFoco = document.activeElement;
+      // Travar o scroll do body faz a barra de rolagem sumir e a página inteira
+      // salta para o lado. Compensamos com um padding da largura exata da barra.
+      var barra = window.innerWidth - document.documentElement.clientWidth;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      if (barra > 0) document.body.style.paddingRight = barra + 'px';
+      var alvo = modal.querySelector('#upsell-sim');
+      if (alvo) alvo.focus();
+    }
+    function fechar() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      if (ultimoFoco) ultimoFoco.focus();
+    }
+
+    abre.addEventListener('click', abrir);
+    modal.querySelectorAll('[data-fechar]').forEach(function (b) {
+      b.addEventListener('click', fechar);
     });
-    return alvo;
-  }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !modal.hidden) fechar();
+    });
+    // recusou o upgrade: segue para o checkout do plano basico
+    if (nao) nao.addEventListener('click', function () {
+      window.__indoParaCheckout = true;
+      window.location.href = destinoBasico;
+    });
+  })();
 
-  function ir(i, suave){
-    idx = i;
-    if (suave) trilho.scrollTo({ left: centro(i), behavior: 'smooth' });
-    else trilho.scrollLeft = centro(i);
-    pintar();
-  }
-
-  function pintar(){
-    var real = ((idx % N) + N) % N;
-    cards.forEach(function(c, i){ c.classList.toggle('on', i === idx); });
-    pontos.forEach(function(p, i){ p.classList.toggle('on', i === real); });
-  }
-
-  // O salto invisivel acontece so depois que a rolagem parou, e sempre para um
-  // card identico do conjunto do meio: a imagem na tela nao muda.
-  function saltar(novo){
-    trilho.classList.add('sem-anim');
-    idx = novo;
-    trilho.scrollLeft = centro(idx);
-    pintar();
-    void trilho.offsetWidth; // reflow: fixa o estado novo antes de reanimar
-    trilho.classList.remove('sem-anim');
-  }
-
-  var t;
-  trilho.addEventListener('scroll', function(){
-    clearTimeout(t);
-    t = setTimeout(function(){
-      idx = maisProximo();
-      if (idx >= 2 * N) saltar(idx - N);
-      else if (idx < N) saltar(idx + N);
-      else pintar();
-    }, 130);
-  }, { passive: true });
-
-  ['pointerdown', 'touchstart', 'wheel'].forEach(function(ev){
-    trilho.addEventListener(ev, function(){ pausa = Date.now() + RETOMA; }, { passive: true });
-  });
-
-  window.moverPrint = function(d){ pausa = Date.now() + RETOMA; ir(idx + d, true); };
-  window.addEventListener('resize', function(){ ir(idx, false); });
-
-  ir(N, false);
-
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    setInterval(function(){
-      if (Date.now() < pausa || document.hidden) return;
-      ir(idx + 1, true);
-    }, DWELL);
-  }
-})();
-
-// Popup downsell
-function abrirPop(){ document.getElementById('pop').classList.add('on'); }
-function fecharPop(){ document.getElementById('pop').classList.remove('on'); }
-document.getElementById('pop').addEventListener('click', function(e){ if(e.target === this) fecharPop(); });
-document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fecharPop(); });
+  // contagem regressiva do plano completo — reinicia a cada visita
+  (function () {
+    var el = document.getElementById('relogio');
+    if (!el) return;
+    var resta = 10 * 60;
+    setInterval(function () {
+      if (resta > 0) resta--;
+      var m = String(Math.floor(resta / 60)).padStart(2, '0');
+      var s = String(resta % 60).padStart(2, '0');
+      el.textContent = m + ':' + s;
+    }, 1000);
+  })();
 </script>
 
 </body>
