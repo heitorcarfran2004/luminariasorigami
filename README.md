@@ -81,7 +81,7 @@ senão o navegador escolhe o arquivo errado.
 
 ```
 assets/
-  hero.webp / hero-700 / hero-420   foto das 10 luminárias montadas (16:9, 1400px)
+  hero2.webp / hero2-700 / hero2-420  foto das 10 luminárias montadas (16:9, 1400px)
   pecas-web/ + pecas-sm/            21 peças do carrossel (800 e 400)
   provas/ + provas-sm/              7 anúncios de marketplace (520 e 340)
   depoimentos/ + depoimentos-sm/    5 prints de WhatsApp (720 e 360)
@@ -93,7 +93,16 @@ Todo o resto é `loading="lazy"`.
 
 A hero é **deitada (16:9)**, ao contrário da arte quadrada da página de miçangas.
 Por isso a coluna da imagem no `.hero-grid` é um pouco mais larga que a do texto
-(`.94fr 1.06fr`) e a imagem ocupa `width:100%`, não 85%.
+(`.94fr 1.06fr`) e a imagem ocupa `width:100%`, não 85%. Ela **não tem sombra nem
+borda** — só o `border-radius`: a foto entra direto no creme do hero. A página de
+miçangas tem `box-shadow` ali porque a arte dela é recortada em fundo branco; aqui
+a sombra virava moldura em volta de uma foto que já tem fundo próprio.
+
+O nome é `hero2` e não `hero` **de propósito**. A troca da arte antiga (a colagem do
+kit) pela foto aconteceu depois da página já estar no ar, e o `hero.webp` estava
+carimbado com 30 dias de cache no navegador de quem já tinha visitado e no CDN da
+Vercel — o nome novo é o que faz a foto certa aparecer na hora. Mesma regra vale
+para qualquer troca futura de imagem.
 
 `bonus-4.webp` tem só **760 px de largura** — foi gerado a partir de uma cópia
 reduzida, porque o original saiu de `Downloads` antes da conversão. Se aparecer
