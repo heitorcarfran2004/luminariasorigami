@@ -1118,11 +1118,28 @@
       var VELOCIDADE = 0.45;   // px por quadro (~27px/s a 60fps)
       var arrastando = false;  // so para enquanto o dedo/mouse esta pressionado
       var acumulado = 0;
+      var visivel = false;     // perto da tela? (IntersectionObserver la embaixo)
+      var rodando = false;     // ha um requestAnimationFrame em voo?
 
-      // metade do conteudo: a segunda leva de imagens e so a emenda do loop
-      function meio() { return trilho.scrollWidth / 2; }
+      // Metade do conteudo: a segunda leva de imagens e so a emenda do loop.
+      //
+      // Isto era uma funcao que lia trilho.scrollWidth DENTRO do quadro. Ler
+      // scrollWidth logo depois de escrever scrollLeft obriga o navegador a
+      // recalcular o layout na hora — um reflow sincrono por quadro, em dois
+      // trilhos com 56 imagens somadas, comecando junto com o carregamento.
+      // Era o que segurava a primeira pintura da pagina.
+      //
+      // O valor so muda quando o trilho e remedido: no resize e quando uma
+      // imagem de dentro dele termina de carregar. Entao medimos nessas duas
+      // horas e o quadro passa a so ler uma variavel.
+      var metade = 0;
+      function remedir() { metade = trilho.scrollWidth / 2; }
+      remedir();
+      window.addEventListener('resize', remedir, { passive: true });
+      trilho.addEventListener('load', remedir, true);   // captura: img nao borbulha
 
       function quadro() {
+        if (!visivel) { rodando = false; return; }   // fora da tela nao anima
         if (!arrastando) {
           acumulado += VELOCIDADE;
           // scrollLeft so aceita inteiro na maioria dos navegadores; acumulamos a
@@ -1133,7 +1150,7 @@
             trilho.scrollLeft += passo;
           }
           // emenda invisivel: ao passar da primeira leva, volta o equivalente
-          if (trilho.scrollLeft >= meio()) trilho.scrollLeft -= meio();
+          if (metade && trilho.scrollLeft >= metade) trilho.scrollLeft -= metade;
         }
         requestAnimationFrame(quadro);
       }
@@ -1149,7 +1166,27 @@
       // solta fora do carrossel (o dedo saiu da area antes de levantar)
       window.addEventListener('pointerup', function () { arrastando = false; }, { passive: true });
 
-      requestAnimationFrame(quadro);
+      // Os dois carrosseis ficam bem abaixo da dobra, mas o loop comecava junto
+      // com a pagina e ficava animando algo que ninguem estava vendo — trabalho
+      // de layout competindo com a primeira pintura. Agora so anda quando esta
+      // perto da tela. O visitante ve exatamente a mesma coisa: nao da para
+      // notar movimento em algo fora do campo de visao.
+      function liga() {
+        if (rodando) return;
+        rodando = true;
+        remedir();                    // pode ter chegado imagem enquanto parado
+        requestAnimationFrame(quadro);
+      }
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entradas) {
+          visivel = entradas[0].isIntersecting;
+          if (visivel) liga();
+        }, { rootMargin: '200px 0px' }).observe(trilho);
+      } else {
+        visivel = true;
+        liga();
+      }
     }
 
     deslizar('modelos');   // carrossel das luminárias montadas
