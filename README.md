@@ -85,7 +85,7 @@ assets/
   pecas-web/ + pecas-sm/            21 peças do carrossel (800 e 400)
   provas/ + provas-sm/              7 anúncios de marketplace (520 e 340)
   depoimentos/ + depoimentos-sm/    5 prints de WhatsApp (720 e 360)
-  bonus/ + bonus-sm/                4 capas de bônus (16:9)
+  bonus/ + bonus-sm/                5 capas de bônus (16:9)
 ```
 
 Só a hero é `eager` e tem `preload` com `imagesrcset` — ela é o elemento de LCP.
@@ -133,17 +133,27 @@ página com o back redirect desarmado.
 
 ## Bônus
 
-São **4**, somando R$ 108 anunciados:
+São **5**, somando R$ 135 anunciados:
 
 1. Guia de Como Dobrar Direito — R$ 27 (`bonus-3.webp`)
 2. Manual da Luz em 5 Minutos — R$ 27 (`bonus-2.webp`)
 3. Tabela de Quanto Cobrar — R$ 27 (`bonus-1.webp`)
 4. Guia do Papel Que Funciona — R$ 27 (`bonus-4.webp`)
+5. Lista de Compras da Iniciante — R$ 27 (`bonus-5.webp`)
+
+**A capa do Bônus 5 é a mesma cena da capa do Bônus 1** — o caderno na foto diz
+"Guia de Como Dobrar Direito". Foi uma escolha do Heitor, com a ressalva feita. Se
+um dia sair uma arte própria da lista de compras, é só trocar `bonus-5.webp` (e a
+versão em `bonus-sm/`) mantendo um nome NOVO, por causa do cache de 30 dias.
+
+Com 5 bônus a grade de 2 colunas fecha em 3 linhas cheias e o card "os 5 vão juntos"
+é o sexto. Se voltar para 4, ele precisa de `grid-column:1/-1` para não sobrar
+sozinho numa linha.
 
 O número aparece em **seis lugares** no `index.html` (headline da seção, card
-"os 4 vão juntos", lista do plano Completo, item riscado do Básico, texto do popup
+"os 5 vão juntos", lista do plano Completo, item riscado do Básico, texto do popup
 e resposta do FAQ) e em **quatro** no `promo.html` (meta description, sub do hero,
-lista e soma). Ao subir para 5, conferir todos.
+lista e soma). Ao mudar o número, conferir todos.
 
 ## Performance
 
@@ -169,8 +179,7 @@ byte idêntico.
 - [ ] Colar o Meta Pixel no lugar do comentário `<!-- META PIXEL: cole seu pixel aqui -->`
       (está em `index.html` **e** em `promo.html`)
 - [ ] Trocar `[seu e-mail de suporte]` no rodapé do `index.html`
-- [ ] Bônus 5, se for subir de 4 para 5 — falta a arte da capa
-- [ ] Produzir os 4 bônus como arquivo (hoje só existem as capas)
+- [ ] Produzir os 5 bônus como arquivo (hoje só existem as capas)
 
 O script da Utmify já está ativo — é o mesmo ID de conta dos outros funis.
 

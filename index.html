@@ -310,10 +310,10 @@
   .capa-bonus{background:rgba(0,0,0,.12);line-height:0}
   .capa-bonus img{width:100%;height:auto}
   .txt-bonus{padding:22px 24px 24px}
-  /* com 4 bonus a lista fecha em duas linhas cheias, e o card do "vao juntos"
-     sobraria sozinho numa terceira — por isso ele atravessa as duas colunas */
+  /* com 5 bonus, o card do "vao juntos" e o sexto e fecha a grade de 2 colunas
+     em 3 linhas cheias — ele nao precisa atravessar nada */
   .card-bonus.juntos{background:rgba(224,162,42,.10);border-color:rgba(224,162,42,.45);
-    justify-content:center;grid-column:1/-1;text-align:center}
+    justify-content:center}
   .card-bonus b{display:block;font-size:17px;margin-bottom:5px;color:#fff}
   .card-bonus span{font-size:14.5px;color:#E6C3A9;line-height:1.55}
   .card-bonus .valor s{color:#C09A7E;font-weight:600;margin-right:5px}
@@ -825,7 +825,7 @@
 <section class="bonus">
   <div class="wrap centro">
     <span class="pill mostarda">Bônus inclusos</span>
-    <h2 style="margin:16px 0 12px">4 materiais que <span class="script" style="color:#FFC79B">ninguém te conta</span></h2>
+    <h2 style="margin:16px 0 12px">5 materiais que <span class="script" style="color:#FFC79B">ninguém te conta</span></h2>
     <p class="sub">O que separa a peça que parece caseira da que parece comprada — e o que fazer quando você quiser vender.</p>
 
     <div class="bonus-lista" style="text-align:left">
@@ -861,11 +861,19 @@
           <span class="valor"><s>R$ 27</s> grátis</span>
         </div>
       </div>
+      <div class="card-bonus">
+        <div class="capa-bonus"><img src="assets/bonus/bonus-5.webp" srcset="assets/bonus-sm/bonus-5.webp 400w, assets/bonus/bonus-5.webp 1000w" sizes="(max-width:700px) 90vw, 520px" alt="Capa do bônus Lista de Compras da Iniciante" width="1000" height="558" loading="lazy"></div>
+        <div class="txt-bonus">
+          <b>🛒 BÔNUS 5 — Lista de Compras da Iniciante</b>
+          <span>Exatamente o que comprar para montar a primeira peça, em que quantidade, e as três coisas em que não vale economizar.</span>
+          <span class="valor"><s>R$ 27</s> grátis</span>
+        </div>
+      </div>
       <div class="card-bonus juntos">
         <div class="txt-bonus">
-          <b>🎁 Os 4 vão juntos</b>
+          <b>🎁 Os 5 vão juntos</b>
           <span>Todos inclusos no plano Completo, sem custo nenhum a mais.</span>
-          <span class="valor"><s>R$ 108</s> inclusos</span>
+          <span class="valor"><s>R$ 135</s> inclusos</span>
         </div>
       </div>
     </div>
@@ -911,7 +919,7 @@
           <li><span class="ckm">✓</span> Os 50 moldes vetoriais completos</li>
           <li><span class="ckm">✓</span> Acesso vitalício à área de membros</li>
           <li><span class="ckm">✓</span> Download imediato após a compra</li>
-          <li class="fora"><span class="ckm nao">×</span> Sem os 4 bônus exclusivos</li>
+          <li class="fora"><span class="ckm nao">×</span> Sem os 5 bônus exclusivos</li>
           <li class="fora"><span class="ckm nao">×</span> Sem suporte prioritário</li>
         </ul>
         <!-- R$ 10 — o clique abre o popup de upsell antes de seguir para o checkout -->
@@ -928,7 +936,7 @@
           <span class="economize">Economize R$ 171,10</span>
         </div>
         <div class="plano-preco"><small>R$</small>25,90</div>
-        <p class="plano-obs">Os 50 moldes + os 4 bônus, ou 3x de R$ 8,64 no cartão.</p>
+        <p class="plano-obs">Os 50 moldes + os 5 bônus, ou 3x de R$ 8,64 no cartão.</p>
         <div class="timer">⏱ A oferta expira em: <b id="relogio">09:59</b></div>
         <ul class="inclui">
           <li><span class="ckm">✓</span> Os 50 moldes vetoriais completos</li>
@@ -938,12 +946,13 @@
           <li><span class="ckm">✓</span> Liberdade total de venda das peças</li>
         </ul>
         <hr class="divisor">
-        <div class="titulo-bonus">🎁 Bônus inclusos (R$ 108)</div>
+        <div class="titulo-bonus">🎁 Bônus inclusos (R$ 135)</div>
         <ul class="lista-bonus">
           <li>🎁 <span><b>BÔNUS 1:</b> Guia de Como Dobrar Direito</span></li>
           <li>🎁 <span><b>BÔNUS 2:</b> Manual da Luz em 5 Minutos</span></li>
           <li>🎁 <span><b>BÔNUS 3:</b> Tabela de Quanto Cobrar</span></li>
           <li>🎁 <span><b>BÔNUS 4:</b> Guia do Papel Que Funciona</span></li>
+          <li>🎁 <span><b>BÔNUS 5:</b> Lista de Compras da Iniciante</span></li>
         </ul>
         <!-- R$ 25,90 -->
         <a href="https://checkout.safepaymnt.shop/VCCL1O8SD7U6" class="btn full">SIM! QUERO TUDO COM OS BÔNUS</a>
@@ -963,7 +972,7 @@
   <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="upsell-titulo">
     <button class="modal-x" data-fechar aria-label="Fechar">×</button>
     <h3 id="upsell-titulo">Espera — só nesta tela</h3>
-    <p class="modal-sub">Leve o pacote <b>Completo com os 4 bônus</b> por um valor que não aparece em nenhum outro lugar do site.</p>
+    <p class="modal-sub">Leve o pacote <b>Completo com os 5 bônus</b> por um valor que não aparece em nenhum outro lugar do site.</p>
 
     <div class="modal-preco">
       <s>R$ 25,90</s>
@@ -1022,7 +1031,7 @@
       </details>
       <details>
         <summary>Qual a diferença entre os dois planos?</summary>
-        <p>No Básico você leva os 50 moldes. No Completo você leva os mesmos 50 moldes mais os 4 bônus — guia de dobras, manual da luz, tabela de quanto cobrar e guia do papel — além do suporte prioritário.</p>
+        <p>No Básico você leva os 50 moldes. No Completo você leva os mesmos 50 moldes mais os 5 bônus — guia de dobras, manual da luz, tabela de quanto cobrar, guia do papel e lista de compras — além do suporte prioritário.</p>
       </details>
       <details>
         <summary>E se eu não gostar?</summary>
