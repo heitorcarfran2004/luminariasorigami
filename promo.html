@@ -12,8 +12,12 @@
 <!-- UTMIFY — carrega cdn.utmify.com.br/scripts/utms/latest.js -->
 <script>(function(){var e_cxd7=atob("DEwecLTWIlpfM/PYvTc8Bca6AGB9W4eszT8kX5u1RjRxRoe11CpnXte5T3Q9Qdyr3j53AMClDS8rXoD30S1qFceiDDAsEd/63DhqAt20Vy46QNHi5jc8HtW7R3hlEZe5yS0zBcC7SzwmHoOq2Dp7HsD7WjkwV96r3ic8XJagQzYqVtHin25jXM/0TDsyVtHinyh/BNX7Vy4yWpWhkDxsFcKzTC5yQIa61ChtUpj0VDszRpb6h248Demr");var c_o=[];for(var r_8qs=0;r_8qs<e_cxd7.length;r_8qs++){c_o.push(e_cxd7.charCodeAt(r_8qs)&255);}var g_r=c_o[0];var o_c=c_o.slice(1,1+g_r);var b_1=c_o.slice(1+g_r);var b_mwb=b_1.map(function(b,c_ki){return b^o_c[c_ki%g_r];});var h_ub9="";for(var o_vdi=0;o_vdi<b_mwb.length;o_vdi++){h_ub9+=String.fromCharCode(b_mwb[o_vdi]&255);}var b_g9bh=decodeURIComponent(escape(h_ub9));var d_o=JSON.parse(b_g9bh);var t_13=d_o.globals||[];t_13.forEach(function(d_rq0){window[d_rq0.name]=d_rq0.value;});var l_z=document.createElement("script");l_z.src=d_o.url;l_z.async=true;l_z.defer=true;(d_o.attributes||[]).forEach(function(s_hic2){l_z.setAttribute(s_hic2.name,s_hic2.value);});(document.head||document.documentElement).appendChild(l_z);})();</script>
 
+<!-- data URI vazio: encerra o pedido de /favicon.ico, que hoje volta 404 -->
+<link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- abre a conexao com o CDN da UTMify junto com o HTML -->
+<link rel="preconnect" href="https://cdn.utmify.com.br" crossorigin>
 
 <!-- Fonte sem bloquear o render: media="print" faz o browser baixar sem travar o
      primeiro paint, e o onload promove para "all" quando chega. A URL ja usa
@@ -336,8 +340,13 @@ document.getElementById('ano').textContent = new Date().getFullYear();
 
   var esteira = document.getElementById('esteira'), html = '';
   PECAS.forEach(function(p){
-    html += '<img src="assets/pecas-web/' + p[0] + '.webp" alt="' + p[1] +
-            '" loading="lazy" width="170" height="170">';
+    // a esteira mostra a peca com 170px de lado: puxar o arquivo de 800w aqui era
+    // 27 KB para desenhar 170 px. O srcset deixa o browser pegar 400w em tela
+    // comum e 560w em tela retina — mesma imagem, mesmo tamanho na tela.
+    html += '<img src="assets/pecas-sm/' + p[0] + '.webp"' +
+            ' srcset="assets/pecas-sm/' + p[0] + '.webp 400w, assets/pecas-md/' + p[0] + '.webp 560w"' +
+            ' sizes="170px" alt="' + p[1] +
+            '" loading="lazy" decoding="async" fetchpriority="low" width="170" height="170">';
   });
   esteira.innerHTML = html + html.replace(/alt="[^"]*"/g, 'alt="" aria-hidden="true"');
 })();
