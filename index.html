@@ -1132,11 +1132,21 @@
       // O valor so muda quando o trilho e remedido: no resize e quando uma
       // imagem de dentro dele termina de carregar. Entao medimos nessas duas
       // horas e o quadro passa a so ler uma variavel.
+      // Medir e caro: ler scrollWidth obriga o navegador a resolver o layout do
+      // trilho inteiro. Entao medimos o MINIMO de vezes — e nunca enquanto o
+      // carrossel esta fora da tela, que e justamente quando a pagina esta
+      // tentando pintar. Sao 42 imagens aqui; uma medida por imagem que chega
+      // custava 247ms de reflow no Lighthouse.
       var metade = 0;
+      var agendada = false;
       function remedir() { metade = trilho.scrollWidth / 2; }
-      remedir();
-      window.addEventListener('resize', remedir, { passive: true });
-      trilho.addEventListener('load', remedir, true);   // captura: img nao borbulha
+      function agendarRemedida() {
+        if (agendada || !visivel) return;   // fora da tela nao mede: liga() mede ao entrar
+        agendada = true;
+        requestAnimationFrame(function () { agendada = false; remedir(); });
+      }
+      window.addEventListener('resize', agendarRemedida, { passive: true });
+      trilho.addEventListener('load', agendarRemedida, true);   // captura: img nao borbulha
 
       function quadro() {
         if (!visivel) { rodando = false; return; }   // fora da tela nao anima
