@@ -82,7 +82,7 @@ senão o navegador escolhe o arquivo errado.
 ```
 assets/
   hero2.webp / hero2-700 / hero2-420  foto das 10 luminárias montadas (16:9, 1400px)
-  pecas-web/ + pecas-sm/            21 peças do carrossel (800 e 400)
+  pecas-web/ + pecas-md/ + pecas-sm/  21 peças do carrossel (800, 560 e 400)
   provas/ + provas-sm/              7 anúncios de marketplace (520 e 340)
   depoimentos/ + depoimentos-sm/    5 prints de WhatsApp (720 e 360)
   bonus/ + bonus-sm/                5 capas de bônus (16:9)
@@ -157,16 +157,59 @@ lista e soma). Ao mudar o número, conferir todos.
 
 ## Performance
 
+Medido com Lighthouse mobile, 5 rodadas intercaladas de cada versão servidas lado a
+lado na mesma máquina (medianas). Comparação entre `e72b6b5` e `e491b4f`:
+
+| | antes | depois |
+|---|---|---|
+| Score | 87 | **98** |
+| First Contentful Paint | 3001 ms | 1922 ms |
+| Largest Contentful Paint | 3228 ms | 2094 ms |
+| Primeira pintura (trace real) | 1256 ms | 304 ms |
+| Forced reflow | 190 ms | 0 ms |
+| Peso baixado | 371 KB | 278 KB |
+| Requisições | 15 | 14 |
+
+No site publicado a mediana fica em **88**, não 98: a diferença é rede real mais o
+script da UTMify, que é de terceiro e não dá para mexer.
+
+**Rodada única não serve para comparar.** Com o navegador e o servidor de preview
+abertos, cinco medições da mesma versão deram 84, 85, 86, 88 e 98. Feche tudo e use
+mediana de 5, senão a leitura vira ruído.
+
 O que está ligado, e por quê:
 
 | Medida | Onde | Efeito |
 |---|---|---|
+| `fetchpriority="low"` abaixo da dobra | 66 `<img>` | o hero e as fontes passam na frente |
+| `loading="lazy"` + `decoding="async"` | idem | decodificação sai do main thread |
 | Imagens responsivas com `srcset`/`sizes` | todas as `<img>` | o celular baixa a versão pequena |
+| Carrossel só anima perto da tela | `deslizar()` | nada de layout durante o carregamento |
+| Medida do trilho coalescida em 1 quadro | `agendarRemedida()` | zerou 190 ms de reflow forçado |
+| `preload` + `fetchpriority=high` no hero | `<head>` | o hero é o elemento de LCP |
+| Fonte sem bloquear render | `media="print"` + `onload` | com `<noscript>` de fallback |
+| `preconnect` para o CDN da UTMify | `<head>` | tira DNS+TLS do caminho crítico |
+| `<link rel="icon" href="data:,">` | `<head>` | mata o 404 de `/favicon.ico` |
 | Minificação de CSS/JS/HTML | `build.cjs`, no build da Vercel | roda só na Vercel |
 | Cache dos assets | `vercel.json` → 30 dias + `stale-while-revalidate` | |
-| `preload` + `fetchpriority` no hero | `<head>` | o hero é o elemento de LCP |
-| Fonte sem bloquear render | `media="print"` + `onload` | com `<noscript>` de fallback |
-| `loading="lazy"` abaixo da dobra | carrosséis, depoimentos, bônus | |
+| HTML no edge | `vercel.json` → `s-maxage=86400` | melhora o TTFB |
+
+### O que NÃO adianta mexer
+
+**Minificar CSS mais agressivamente piora.** Colapsar espaço em volta de `{ } : ; ,`
+e tirar o `;` final deixa o HTML **29 bytes maior depois do brotli** — o dicionário
+do compressor aproveita os padrões repetidos (`; `, `: `) melhor do que a remoção
+deles. Medido, não estimado. `build.cjs` já está no ponto certo.
+
+**O `sizes` tem que bater com o CSS.** As peças do carrossel aparecem com 240 px;
+em DPR 1,75 isso pede 420 px e o `srcset` só tinha 400 e 800 — o navegador pegava
+o de 800 para desenhar 240. O degrau de 560 w (`pecas-md/`) existe por isso. **Ao
+mudar uma largura no CSS, refazer essa conta.**
+
+**Nunca leia `scrollWidth`/`offsetWidth` dentro do `requestAnimationFrame`.** Foi
+o que segurou a primeira pintura em 1256 ms: ler depois de escrever `scrollLeft`
+obriga o navegador a resolver o layout na hora, 60 vezes por segundo, em dois
+trilhos com 56 imagens.
 
 **`build.cjs` roda in place e só na Vercel** (guard em `process.env.VERCEL`). O que
 está no git continua legível; só o que vai pro CDN sai minificado. Ele é
