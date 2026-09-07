@@ -16,7 +16,7 @@
       ]
     },
     {
-      "source": "/(index.html)?",
+      "source": "/",
       "headers": [
         {
           "key": "Cache-Control",
@@ -25,7 +25,25 @@
       ]
     },
     {
-      "source": "/promo(.html)?",
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/promo",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/promo.html",
       "headers": [
         {
           "key": "Cache-Control",
